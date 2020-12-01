@@ -26,7 +26,9 @@
                                 {{#each products}}
                                 <tr>
                                     <th scope="row"><input type="checkbox" /></th>
-                                    <td class="tm-product-name">{{this.name}}</td>
+                                    <td class="tm-product-name">
+                                        <a class='link-edit' href='products/{{this._id}}/edit'>{{this.name}}</a>
+                                    </td>
                                     <td>{{this.author}}</td>
                                     <td>0</td>
                                     <td>{{this.createdAt}}</td>
@@ -154,14 +156,7 @@
         </div>
     </div>
     <script src="js/jquery-3.3.1.min.js"></script>
-    <!-- https://jquery.com/download/ -->
-    <script>
-        $(function () {
-            $(".tm-product-name").on("click", function () {
-                window.location.href = "edit-product.html";
-            });
-        });
-    </script>
+
 
 
 </body>

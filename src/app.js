@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const exphbs = require('express-handlebars');
 const Router = require('./routes/index');
+const methodOverride = require('method-override')
 
 const app = express();
 
@@ -14,6 +15,9 @@ app.use(express.static(path.join(__dirname,'public')));
 //Middleware parse req.body
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+
+//Method
+app.use(methodOverride('_method'))
 
 //Handlerbar
 app.engine('.hbs', exphbs({extname: '.hbs'}));

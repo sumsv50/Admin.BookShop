@@ -707,3 +707,15 @@ input[type="checkbox"]:focus {
     max-height: 350px;
   }
 }
+
+
+
+/* --------------- */
+.link-edit{
+  color: white;
+  transition: 0.5s;
+}
+
+.link-edit:hover{
+  color: wheat;
+}

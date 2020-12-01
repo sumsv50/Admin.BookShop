@@ -1,5 +1,6 @@
 const Products = require('../models/Products');
-const { mongoosesToObject } = require('../util/mongoose');
+const { mongoosesToObject, mongooseToObject } = require('../util/mongoose');
+const {bodyToMongoose} = require('../util/bodyToMongoose');
 
 class ProductsController {
     index(req, res, next) {
@@ -16,17 +17,7 @@ class ProductsController {
 
     //[POST] products/store
     storeProduct(req, res){
-        const formData = req.body;
-        const detail = new Object;
-        
-        detail.isbn = req.body.isbn;
-        detail.publisher = req.body.publisher;
-        detail.publication_date = req.body.publication_date;
-        detail.pages = req.body.pages;
-        detail.sales_rank = req.body.sales_rank;
-        detail.product_dimensions = req.body.product_dimensions
-
-        formData.detail = detail;
+        const formData = bodyToMongoose(req.body);
 
        const product = new Products(formData);
        product.save()
@@ -34,7 +25,25 @@ class ProductsController {
         res.redirect('/products')
        })
     }
+
+    // [GET] /products/:id/edit
+    edit(req, res, next){
+        Products.findById(req.params.id)
+            .then((product) => res.render('products/edit-product', {
+                product: mongooseToObject(product)
+            }))
+            .catch(next)
+            
+    }
+
+    // [PUT] /products/:id
+    update(req, res, next){
+         Products.updateOne({_id: req.params.id}, bodyToMongoose(req.body))
+            .then(()=> res.redirect('/products'))
+            .catch(next)
+    }
 }
 
 
 module.exports = new ProductsController;
+
