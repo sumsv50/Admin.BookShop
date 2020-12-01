@@ -4,7 +4,7 @@ const exphbs = require('express-handlebars');
 const Router = require('./routes/index');
 const methodOverride = require('method-override')
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 3000
 
 const app = express();
 
@@ -22,7 +22,15 @@ app.use(express.json());
 app.use(methodOverride('_method'))
 
 //Handlerbar
-app.engine('.hbs', exphbs({extname: '.hbs'}));
+app.engine('.hbs', exphbs({
+    extname: '.hbs',
+    helpers: {
+        ifEquals: function (arg1, arg2, options) {
+            return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+        },
+    }
+})
+);
 app.set('view engine', '.hbs');
 
 app.set('views', path.join(__dirname, 'views'));

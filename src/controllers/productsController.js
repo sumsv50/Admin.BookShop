@@ -1,18 +1,19 @@
 const Products = require('../models/Products');
 const { mongoosesToObject, mongooseToObject } = require('../util/mongoose');
 const {bodyToMongoose} = require('../util/bodyToMongoose');
+const currentpage= 'product';
 
 class ProductsController {
     index(req, res, next) {
         Products.find({})
             .then(products =>
-                {res.render('products/products', { products: mongoosesToObject(products)
+                {res.render('products/products', { products: mongoosesToObject(products), currentpage
                 })
             })
             .catch(next);
     }
     createProduct(req, res){
-        res.render('products/create-product')
+        res.render('products/create-product', {currentpage})
     }
 
     //[POST] products/store
@@ -30,7 +31,7 @@ class ProductsController {
     edit(req, res, next){
         Products.findById(req.params.id)
             .then((product) => res.render('products/edit-product', {
-                product: mongooseToObject(product)
+                product: mongooseToObject(product), currentpage
             }))
             .catch(next)
             
