@@ -33,7 +33,8 @@
                                     <td>0</td>
                                     <td>{{this.createdAt}}</td>
                                     <td>
-                                        <a href="#" class="tm-product-delete-link">
+                                        <a href="#" class="tm-product-delete-link" data-id="{{this._id}}" data-name="{{this.name}}"
+                                        data-toggle="modal" data-target="#delete-product-modal">
                                             <i class="far fa-trash-alt tm-product-delete-icon"></i>
                                         </a>
                                     </td>
@@ -155,8 +156,54 @@
             </div>
         </div>
     </div>
-    <script src="js/jquery-3.3.1.min.js"></script>
 
+{{!-- ------------form delete product-------------- --}}
+<form name="delete-product-form" method="POST"></form>
+
+{{!-- ------------Confirm delete product-------------- --}}
+    <div class="modal fade" id="delete-product-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+        
+                </div>
+                <div class="modal-footer">
+                    <button id="btnDeleteProduct" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script>
+        var productId;
+        var btnDeleteProduct = document.getElementById('btnDeleteProduct');
+        var deleteProductForm = document.forms['delete-product-form'];
+
+       //When dialog confirm show
+        $('#delete-product-modal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                productId = button.data('id');
+                var name = button.data('name');
+
+                var modal = $(this)
+                modal.find('.modal-body').text(`Are you sure delete this product? (${name})`);
+        })
+
+        //Bind
+       
+        //Listening
+        btnDeleteProduct.onclick = function () {
+            deleteProductForm.action='/products/' + productId +'?_method=DELETE';
+            deleteProductForm.submit();
+        }
+    </script>
 
 
 </body>

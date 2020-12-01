@@ -42,6 +42,13 @@ class ProductsController {
             .then(()=> res.redirect('/products'))
             .catch(next)
     }
+
+    // [DELETE] /products/:id
+    delete(req, res, next){
+        Products.deleteOne({_id: req.params.id})
+            .then(()=>res.redirect('/products'))
+            .catch(next)
+    }
 }
 
 

@@ -4,6 +4,8 @@ const exphbs = require('express-handlebars');
 const Router = require('./routes/index');
 const methodOverride = require('method-override')
 
+const PORT = process.env.PORT || 5000
+
 const app = express();
 
 //Config and connect to MongoDB
@@ -31,4 +33,4 @@ app.set('views', path.join(__dirname, 'views'));
 //[Router]
 Router(app);
 
-app.listen(3000);
+app.listen(PORT);
