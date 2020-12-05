@@ -12,7 +12,7 @@ router.post('/store-category', productsController.storeCategory);
 
 router.get('/:id/edit', productsController.edit);
 router.put('/:id', productsController.update);
-router.delete('/:id', productsController.delete);
+router.delete('/:id/:categoryID', productsController.delete);
 
 module.exports = router;
 

@@ -11,3 +11,11 @@ module.exports.store = async (reqBody) => {
         await category.save();
     }
 }
+
+module.exports.increaseNum = async (id) => {
+    await Category.findOneAndUpdate({_id:id}, { $inc: {numOfBook: 1} });
+}
+
+module.exports.decreaseNum = async (id) => {
+    await Category.findOneAndUpdate({_id:id}, { $inc: {numOfBook: -1} });
+}

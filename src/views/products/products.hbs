@@ -31,7 +31,7 @@
                                     <td>0</td>
                                     <td>{{generateDate this.createdAt "kk:mm:ss | DD/MM/YYYY "}}</td>
                                     <td>
-                                        <a href="#" class="tm-product-delete-link" data-id="{{this._id}}"
+                                        <a href="#" class="tm-product-delete-link" data-id="{{this._id}}" data-cate="{{this.categoryID}}"
                                             data-name="{{this.name}}" data-toggle="modal"
                                             data-target="#delete-product-modal">
                                             <i class="far fa-trash-alt tm-product-delete-icon"></i>
@@ -159,6 +159,7 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script>
         var productId;
+        var categoryId;
         var btnDeleteProduct = document.getElementById('btnDeleteProduct');
         var btnAddNewCategory = document.getElementById('btnAddNewCategory');
         var deleteProductForm = document.forms['delete-product-form'];
@@ -171,15 +172,16 @@
         $('#delete-product-modal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
             productId = button.data('id');
+            categoryId = button.data('cate');
+                  
             var name = button.data('name');
-
             var modal = $(this)
             modal.find('.modal-body').text(`Are you sure delete this product? (${name})`);
         })
           
         //Listening
         btnDeleteProduct.onclick = function () {
-            deleteProductForm.action = '/products/' + productId + '?_method=DELETE';
+            deleteProductForm.action = '/products/' + productId +'/'+ categoryId + '?_method=DELETE';
             deleteProductForm.submit();
         }
         

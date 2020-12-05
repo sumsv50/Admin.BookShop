@@ -15,6 +15,7 @@ const Product = new Schema({
     description: String,
     detail: Object,
     slug: { type: String, slug: ['name', 'author'], unique: true },
+    categoryID: ObjectId,
 }, { timestamps: true });
 
 // Model name => collection

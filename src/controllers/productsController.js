@@ -24,6 +24,8 @@ class ProductsController {
     async storeProduct(req, res, next) {
         try {
             await productService.store(req.body);
+            // Increase number of books of Category
+            await categoryService.increaseNum(req.body.categoryID);
             res.redirect('/products');
         } catch (err) { next(err) };
     }
@@ -39,23 +41,34 @@ class ProductsController {
     // [GET] /products/:id/edit
     async edit(req, res, next){
         try{
-        product = await productService.findByID(req.params.id);
-        res.render('products/edit-product', { product, currentPage });  
+            const categories = await categoryService.list();
+            const product = await productService.findByID(req.params.id);
+            product.categoryID = product.categoryID.toString();
+            res.render('products/edit-product', { product, categories, currentPage });  
         } catch(err) { next(err) }; 
     }
 
     // [PUT] /products/:id
     async update(req, res, next){
         try{
+            const oldProduct = await productService.findByID(req.params.id);
+            const categoryID_old = oldProduct.categoryID;
+
             await productService.updateOne(req.params.id, req.body);
+            if(categoryID_old != req.body.categoryID){
+                await categoryService.decreaseNum(categoryID_old);
+                await categoryService.increaseNum(req.body.categoryID);
+            }
+
             res.redirect('/products');
         }catch(err) { next(err) };
     }
 
-    // [DELETE] /products/:id
+    // [DELETE] /products/:id/:categoryID
     async delete(req, res, next){
         try{
             await productService.deleteByID(req.params.id);
+            await categoryService.decreaseNum(req.params.categoryID);
             res.redirect('/products');
         } catch(err) { next(err) };
     }
