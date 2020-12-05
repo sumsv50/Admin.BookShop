@@ -1,54 +1,63 @@
-const Products = require('../models/Products');
-const { mongoosesToObject, mongooseToObject } = require('../util/mongoose');
-const {bodyToMongoose} = require('../util/bodyToMongoose');
-const currentpage= 'product';
+const productService = require('../models/modelServices/ProductService');
+const categoryService = require('../models/modelServices/categoryService');
+
+
+const currentPage= 'product';
 
 class ProductsController {
-    index(req, res, next) {
-        Products.find({})
-            .then(products =>
-                {res.render('products/products', { products: mongoosesToObject(products), currentpage
-                })
-            })
-            .catch(next);
+
+    // [GET] /products
+    async index(req, res, next) {
+        try{
+            const products = await productService.list();
+            const categories = await categoryService.list();
+            res.render('products/products', {products, categories, currentPage});
+         } catch(err) { next(err) };
     }
-    createProduct(req, res){
-        res.render('products/create-product', {currentpage})
+    // [GET] /products/create-product
+    async createProduct(req, res){
+        const categories = await categoryService.list();
+        res.render('products/create-product', { categories, currentPage })
     }
 
-    //[POST] products/store
-    storeProduct(req, res){
-        const formData = bodyToMongoose(req.body);
+    // [POST] /products/store
+    async storeProduct(req, res, next) {
+        try {
+            await productService.store(req.body);
+            res.redirect('/products');
+        } catch (err) { next(err) };
+    }
 
-       const product = new Products(formData);
-       product.save()
-       .then(()=>{
-        res.redirect('/products')
-       })
+    // [POST] /products/store-category
+    async storeCategory(req, res, next) {
+        try {
+            await categoryService.store(req.body);
+            res.redirect('/products');
+        } catch (err) { next(err) };
     }
 
     // [GET] /products/:id/edit
-    edit(req, res, next){
-        Products.findById(req.params.id)
-            .then((product) => res.render('products/edit-product', {
-                product: mongooseToObject(product), currentpage
-            }))
-            .catch(next)
-            
+    async edit(req, res, next){
+        try{
+        product = await productService.findByID(req.params.id);
+        res.render('products/edit-product', { product, currentPage });  
+        } catch(err) { next(err) }; 
     }
 
     // [PUT] /products/:id
-    update(req, res, next){
-         Products.updateOne({_id: req.params.id}, bodyToMongoose(req.body))
-            .then(()=> res.redirect('/products'))
-            .catch(next)
+    async update(req, res, next){
+        try{
+            await productService.updateOne(req.params.id, req.body);
+            res.redirect('/products');
+        }catch(err) { next(err) };
     }
 
     // [DELETE] /products/:id
-    delete(req, res, next){
-        Products.deleteOne({_id: req.params.id})
-            .then(()=>res.redirect('/products'))
-            .catch(next)
+    async delete(req, res, next){
+        try{
+            await productService.deleteByID(req.params.id);
+            res.redirect('/products');
+        } catch(err) { next(err) };
     }
 }
 

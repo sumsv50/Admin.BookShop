@@ -1,10 +1,8 @@
-
-
 <head></head>
 
 <body id="reportsPage">
 
-    <div class="container mt-5">
+    <div class="container-fluid mt-5">
         <div class="row tm-content-row">
             <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
                 <div class="tm-bg-primary-dark tm-block tm-block-products">
@@ -16,7 +14,7 @@
                                     <th scope="col">BOOK NAME</th>
                                     <th scope="col">AUTHOR</th>
                                     <th scope="col">UNIT SOLD</th>
-                                    
+
                                     <th scope="col">CREATED AT</th>
                                     <th scope="col">&nbsp;</th>
                                 </tr>
@@ -31,10 +29,11 @@
                                     </td>
                                     <td>{{this.author}}</td>
                                     <td>0</td>
-                                    <td>{{this.createdAt}}</td>
+                                    <td>{{generateDate this.createdAt "kk:mm:ss | DD/MM/YYYY "}}</td>
                                     <td>
-                                        <a href="#" class="tm-product-delete-link" data-id="{{this._id}}" data-name="{{this.name}}"
-                                        data-toggle="modal" data-target="#delete-product-modal">
+                                        <a href="#" class="tm-product-delete-link" data-id="{{this._id}}"
+                                            data-name="{{this.name}}" data-toggle="modal"
+                                            data-target="#delete-product-modal">
                                             <i class="far fa-trash-alt tm-product-delete-icon"></i>
                                         </a>
                                     </td>
@@ -45,7 +44,8 @@
                         </table>
                     </div>
                     <!-- table container -->
-                    <a href="products/create-product" class="btn btn-primary btn-block text-uppercase mb-3">Add new product</a>
+                    <a href="products/create-product" class="btn btn-primary btn-block text-uppercase mb-3">Add new
+                        product</a>
                     <button class="btn btn-primary btn-block text-uppercase">
                         Delete selected products
                     </button>
@@ -53,103 +53,32 @@
             </div>
             <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 tm-block-col">
                 <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
-                    <h2 class="tm-block-title">Product Categories</h2>
+                    <h2 class="tm-block-title">Book Categories</h2>
                     <div class="tm-product-table-container">
                         <table class="table tm-table-small tm-product-table">
                             <tbody>
+
+                                {{#each categories}}
                                 <tr>
-                                    <td class="tm-product-name">Product Category 1</td>
+                                    <td class="tm-product-name">{{this.name}} ({{this.numOfBook}})</td>
                                     <td class="text-center">
-                                        <a href="#" class="tm-product-delete-link">
+
+                                        {{!-- --------Button delete Category-------- --}}
+                                        {{!-- <a href="#" class="tm-product-delete-link">
                                             <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                        </a>
+                                            </a> --}}
+
+
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="tm-product-name">Product Category 2</td>
-                                    <td class="text-center">
-                                        <a href="#" class="tm-product-delete-link">
-                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="tm-product-name">Product Category 3</td>
-                                    <td class="text-center">
-                                        <a href="#" class="tm-product-delete-link">
-                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="tm-product-name">Product Category 4</td>
-                                    <td class="text-center">
-                                        <a href="#" class="tm-product-delete-link">
-                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="tm-product-name">Product Category 5</td>
-                                    <td class="text-center">
-                                        <a href="#" class="tm-product-delete-link">
-                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="tm-product-name">Product Category 6</td>
-                                    <td class="text-center">
-                                        <a href="#" class="tm-product-delete-link">
-                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="tm-product-name">Product Category 7</td>
-                                    <td class="text-center">
-                                        <a href="#" class="tm-product-delete-link">
-                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="tm-product-name">Product Category 8</td>
-                                    <td class="text-center">
-                                        <a href="#" class="tm-product-delete-link">
-                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="tm-product-name">Product Category 9</td>
-                                    <td class="text-center">
-                                        <a href="#" class="tm-product-delete-link">
-                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="tm-product-name">Product Category 10</td>
-                                    <td class="text-center">
-                                        <a href="#" class="tm-product-delete-link">
-                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="tm-product-name">Product Category 11</td>
-                                    <td class="text-center">
-                                        <a href="#" class="tm-product-delete-link">
-                                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                {{/each}}
+
                             </tbody>
                         </table>
                     </div>
                     <!-- table container -->
-                    <button class="btn btn-primary btn-block text-uppercase mb-3">
+                    <button class="btn btn-primary btn-block text-uppercase mb-3" data-toggle="modal"
+                        data-target="#addNewCategoryDialog" >
                         Add new category
                     </button>
                 </div>
@@ -157,12 +86,13 @@
         </div>
     </div>
 
-{{!-- ------------form delete product-------------- --}}
-<form name="delete-product-form" method="POST"></form>
+    {{!-- ------------form delete product-------------- --}}
+    <form name="delete-product-form" method="POST"></form>
 
-{{!-- ------------Confirm delete product-------------- --}}
-    <div class="modal fade" id="delete-product-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    {{!-- ------------Confirm delete product-------------- --}}
+    <div class="modal fade" id="delete-product-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Delete product</h5>
@@ -171,38 +101,136 @@
                     </button>
                 </div>
                 <div class="modal-body">
-        
+
                 </div>
                 <div class="modal-footer">
-                    <button id="btnDeleteProduct" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cancel</button>
+                    <button id="btnDeleteProduct" type="button" class="btn btn-danger"
+                        data-dismiss="modal">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
     </div>
+
+    {{!-- ------------DIALOG ADD NEW CATEGORY-------------- --}}
+    <div class="modal fade" id="addNewCategoryDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >Add new category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addNewCategoryForm" method="POST" action="products/store-category" autocomplete="off">
+                        <div class="form-group">
+                            <p>Enter new category name: </p>
+                            <input name="name" id="nameCategory" type="text" class="form-control" 
+                                autofocus onblur="funcOutFocusName()" autocomplete="nope">
+                                 <div class="invalid-feedback">
+                                   Enter name.
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            <p>Re-enter name: </p>
+                            <input id="nameCategory_retype" type="text" class="form-control"
+                                onblur="funcOutFocusName_Retype()" autocomplete="nope"/>
+                                <div class="invalid-feedback">
+                                   Do not match
+                                </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="btnAddNewCategory" class="btn btn-primary" disabled="true"
+                        type="submit" form="addNewCategoryForm" value="Submit">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
     <script src="js/jquery-3.3.1.min.js"></script>
     <script>
         var productId;
         var btnDeleteProduct = document.getElementById('btnDeleteProduct');
+        var btnAddNewCategory = document.getElementById('btnAddNewCategory');
         var deleteProductForm = document.forms['delete-product-form'];
+        var txtCategoryName = document.getElementById('nameCategory');
+        var txtCategoryName_retype = document.getElementById('nameCategory_retype');
 
-       //When dialog confirm show
+        var btnAddNewCategory = document.getElementById('btnAddNewCategory');
+
+        //When dialog confirm show
         $('#delete-product-modal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                productId = button.data('id');
-                var name = button.data('name');
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            productId = button.data('id');
+            var name = button.data('name');
 
-                var modal = $(this)
-                modal.find('.modal-body').text(`Are you sure delete this product? (${name})`);
+            var modal = $(this)
+            modal.find('.modal-body').text(`Are you sure delete this product? (${name})`);
         })
-
-        //Bind
-       
+          
         //Listening
         btnDeleteProduct.onclick = function () {
-            deleteProductForm.action='/products/' + productId +'?_method=DELETE';
+            deleteProductForm.action = '/products/' + productId + '?_method=DELETE';
             deleteProductForm.submit();
         }
+        
+
+        {{!-- funcOutFocusName = () =>{
+            if(txtCategoryName.value=='') {
+                txtCategoryName.classList.add("is-invalid");
+                 //btnAddNewCategory.disabled = true;
+            }
+        } --}}
+    
+        // When type input
+        txtCategoryName.addEventListener('input', (event) => {
+            if(txtCategoryName.value == '') {
+                txtCategoryName.classList.add("is-invalid");
+            } else {
+                txtCategoryName.classList.remove("is-invalid");
+            }
+
+            if(txtCategoryName_retype.value == txtCategoryName.value)
+            {
+                txtCategoryName_retype.classList.remove("is-invalid");
+            } else{
+                txtCategoryName_retype.classList.add("is-invalid");
+            }
+
+            //Button
+            if(txtCategoryName.value != '' && txtCategoryName_retype.value == txtCategoryName.value) {
+                 btnAddNewCategory.disabled = false;
+            } else {
+                 btnAddNewCategory.disabled = true;
+            }
+        });
+        
+         txtCategoryName_retype.addEventListener('input', (event) => {
+            if(txtCategoryName_retype.value == txtCategoryName.value)
+            { 
+                txtCategoryName_retype.classList.remove("is-invalid");
+            } else{
+                txtCategoryName_retype.classList.add("is-invalid");
+            }
+
+            //Button
+            if(txtCategoryName.value != '' && txtCategoryName_retype.value == txtCategoryName.value) {
+                 btnAddNewCategory.disabled = false;
+            } else {
+                 btnAddNewCategory.disabled = true;
+            }
+        });
+
+
     </script>
 
 

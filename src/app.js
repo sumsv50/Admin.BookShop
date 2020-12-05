@@ -1,10 +1,14 @@
 const path = require('path');
 const express = require('express');
 const exphbs = require('express-handlebars');
-const Router = require('./routes/index');
 const methodOverride = require('method-override')
+require('dotenv').config();
+var moment = require('moment'); // Generate Date
 
-const PORT = process.env.PORT || 3000
+
+const Router = require('./routes/index');
+
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
@@ -28,6 +32,9 @@ app.engine('.hbs', exphbs({
         ifEquals: function (arg1, arg2, options) {
             return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
         },
+        generateDate: function (date, format) {
+            return moment(date).format(format);
+        }
     }
 })
 );
