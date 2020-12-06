@@ -15,7 +15,8 @@
                     </div>
                     <div class="row tm-edit-product-row">
                         <div class="col-xl-12 col-lg-12 col-md-12">
-                            <form method="POST" action="/products/store" class="tm-edit-product-form">
+                            <form id="form" method="POST" action="/products/store" class="tm-edit-product-form"
+                                enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="form-group mb-3 col-xs-12 col-sm-8">
                                         <label for="name">Product Name * </label>
@@ -24,8 +25,8 @@
                                     </div>
                                     <div class="form-group mb-3 col-xs-12 col-sm-4">
                                         <label for="price">Price *</label>
-                                        <input id="price" name="price" type="number" step="0.01" class="form-control validate"
-                                            required />
+                                        <input id="price" name="price" type="number" step="0.01"
+                                            class="form-control validate" required />
                                     </div>
 
                                 </div>
@@ -34,102 +35,157 @@
                                     <div class="form-group mb-3 col-xs-12 col-sm-6">
                                         <label for="author">Author *</label>
                                         <input id="author" name="author" type="text" class="form-control validate"
-                                            data-large-mode="true" required/>
+                                            data-large-mode="true" required />
                                     </div>
                                     <div class="form-group mb-3 col-xs-12 col-sm-6">
-                                        <label for="img">Link image *</label>
-                                        <input id="img" name="img" type="text" class="form-control validate"
-                                            required />
+                                        <label for="type">Category *</label>
+                                        <select name="categoryID" class="custom-select" id="category" required>
+                                            <option selected disabled>Select category</option>
+                                            {{#each categories}}
+                                            <option value={{this._id}}>{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
                                     </div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="overview">Overview</label>
+                                    <textarea class="form-control validate" name="overview" rows="2"></textarea>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="type">Category *</label>
-                                    <select name="categoryID" class="custom-select" id="category" required>
-                                        <option selected disabled>Select category</option>
-                                        {{#each categories}}
-                                            <option value={{this._id}}>{{this.name}}</option>
-                                        {{/each}}
-                                    </select>
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control validate" name="description" rows="3"></textarea>
                                 </div>
-                                    <div class="form-group mb-3">
-                                        <label for="overview">Overview</label>
-                                        <textarea class="form-control validate" name="overview" rows="2"></textarea>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label for="description">Description</label>
-                                        <textarea class="form-control validate" name="description" rows="3" ></textarea>
-                                    </div>
-                                    <h2 class="tm-block-title d-inline-block">Detail</h3>
-                                        <div class="row">
-                                            <div class="form-group mb-3 col-xs-12 col-sm-6">
-                                                <label for="isbn">ISBN-13</label>
-                                                <input id="isbn" name="isbn" type="text"
-                                                    class="form-control validate" data-large-mode="true" />
-                                            </div>
-                                            <div class="form-group mb-3 col-xs-12 col-sm-6">
-                                                <label for="publisher">Publisher </label>
-                                                <input id="publisher" name="publisher" type="text"
-                                                    class="form-control validate"/>
-                                            </div>
+                                <h2 class="tm-block-title d-inline-block">Detail</h3>
+                                    <div class="row">
+                                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                            <label for="isbn">ISBN-13</label>
+                                            <input id="isbn" name="isbn" type="text" class="form-control validate"
+                                                data-large-mode="true" />
                                         </div>
+                                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                            <label for="publisher">Publisher </label>
+                                            <input id="publisher" name="publisher" type="text"
+                                                class="form-control validate" />
+                                        </div>
+                                    </div>
 
-                                        <div class="row">
-                                            <div class="form-group mb-3 col-xs-12 col-sm-6">
-                                                <label for="publication_date">Publication date</label>
-                                                <input id="publication_date" name="publication_date" type="text"
-                                                    class="form-control validate" data-large-mode="true" />
-                                            </div>
-                                            <div class="form-group mb-3 col-xs-12 col-sm-6">
-                                                <label for="pages">Pages </label>
-                                                <input id="pages" name="pages" type="text"
-                                                    class="form-control validate"/>
-                                            </div>
+                                    <div class="row">
+                                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                            <label for="publication_date">Publication date</label>
+                                            <input id="publication_date" name="publication_date" type="text"
+                                                class="form-control validate" data-large-mode="true" />
                                         </div>
+                                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                            <label for="pages">Pages </label>
+                                            <input id="pages" name="pages" type="text" class="form-control validate" />
+                                        </div>
+                                    </div>
 
-                                           <div class="row">
-                                            <div class="form-group mb-3 col-xs-12 col-sm-6">
-                                                <label for="sales_rank">Sales rank</label>
-                                                <input id="sales_rank" name="sales_rank" type="text"
-                                                    class="form-control validate" data-large-mode="true" />
-                                            </div>
-                                            <div class="form-group mb-3 col-xs-12 col-sm-6">
-                                                <label for="product_dimensions">Product dimensions </label>
-                                                <input id="product_dimensions" name="product_dimensions" type="text"
-                                                    class="form-control validate"/>
+                                    <div class="row">
+                                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                            <label for="sales_rank">Sales rank</label>
+                                            <input id="sales_rank" name="sales_rank" type="text"
+                                                class="form-control validate" data-large-mode="true" />
+                                        </div>
+                                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                                            <label for="product_dimensions">Product dimensions </label>
+                                            <input id="product_dimensions" name="product_dimensions" type="text"
+                                                class="form-control validate" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group mb-3 mt-4 col-xs-12 col-sm-4">
+                                            <input name="img" id="fileInput" type="file" accept="image/*" hidden="hidden" />
+                                            <div class="custom-file mt-3 mb-3">
+                                                <input type="button" class="btn btn-primary btn-block mx-auto"
+                                                    value="UPLOAD PRODUCT IMAGE"
+                                                    onclick=" document.getElementById('fileInput').click();" />
                                             </div>
                                         </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
-                                    <div class="tm-product-img-dummy mx-auto">
-                                        {{!-- <i class="fas fa-cloud-upload-alt tm-upload-icon"
-                                    onclick="document.getElementById('fileInput').click();"></i> --}}
+                                        <div class="form-group mb-3 col-xs-12 col-sm-8 mt-3">
+                                            <div id="carouselExampleIndicators" class="carousel slide"
+                                                data-ride="carousel">
+                                                <ol class="carousel-indicators">
+                                                    <li data-target="#carouselExampleIndicators" data-slide-to="0"
+                                                        class="active"></li>
+                                                    {{!-- <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> --}}
+                                                </ol>
+                                                <div class="carousel-inner">
+                                                    <div class="carousel-item active">
+                                                        <img id="imgPreview" class="d-block w-100" alt="Preview Img">
+                                                        <div class="carousel-caption d-none d-lg-block">
+                            
+                                                            <span id="nameImg"></span>
+                                                        </div>
+                                                    </div>
+                                                    {{!-- <div class="carousel-item">
+                                                        <img src="..." class="d-block w-100" alt="...">
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <img src="..." class="d-block w-100" alt="...">
+                                                    </div> --}}
+                                                </div>
+                                                <a class="carousel-control-prev" href="#carouselExampleIndicators"
+                                                    role="button" data-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#carouselExampleIndicators"
+                                                    role="button" data-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="custom-file mt-3 mb-3">
-                                        <input id="fileInput" type="file" style="display:none;" />
-                                        <input type="button" class="btn btn-primary btn-block mx-auto"
-                                            value="UPLOAD PRODUCT IMAGE"
-                                            onclick="document.getElementById('fileInput').click();" disabled />
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary btn-block text-uppercase">Add Product
-                                        Now</button>
-                                </div>
-                            </form>
                         </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block text-uppercase">Add Product
+                                Now</button>
+                        </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
         </div>
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <!-- https://jquery.com/download/ -->
-        <script src="jquery-ui-datepicker/jquery-ui.min.js"></script>
-        <!-- https://jqueryui.com/download/ -->
-        <script>
-            $(function () {
-                $("#expire_date").datepicker();
-            });
-        </script>
+    </div>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="jquery-ui-datepicker/jquery-ui.min.js"></script>
+    <!-- https://jqueryui.com/download/ -->
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const imgPreview = document.getElementById('imgPreview');
+        const nameImg = document.getElementById('nameImg');
+        const carouselImg = document.getElementById('carouselExampleIndicators');
+
+        carouselImg.style.display = 'none';
+
+        fileInput.addEventListener('change', () => {
+            carouselImg.style.display = 'none';
+            const files = event.target.files;
+            if (files.length > 0) {
+                if(files[0].type) {
+                    if(files[0].type.split('/')[0] == 'image') {
+                        const src = URL.createObjectURL(files[0]);
+                        imgPreview.src = src;
+                        nameImg.innerHTML = files[0].name;
+                        
+                        carouselImg.style.display = 'block';
+                    } else{ 
+                         fileInput.value = '';
+                        }
+                }
+            }
+        })
+
+
+    </script>
 </body>
 
 </html>

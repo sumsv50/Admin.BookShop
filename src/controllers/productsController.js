@@ -1,3 +1,7 @@
+const formidable = require('formidable');
+const fs = require('fs'); 
+const fsPromise = fs.promises;
+
 const productService = require('../models/modelServices/ProductService');
 const categoryService = require('../models/modelServices/categoryService');
 
@@ -23,10 +27,28 @@ class ProductsController {
     // [POST] /products/store
     async storeProduct(req, res, next) {
         try {
-            await productService.store(req.body);
-            // Increase number of books of Category
-            await categoryService.increaseNum(req.body.categoryID);
-            res.redirect('/products');
+            const form = formidable({ multiples: true });
+
+            form.parse(req, async (err, fields, files) => {
+                if (err) {
+                    next(err);
+                    return;
+                }
+
+                const img = files.img;
+                if(img && img.size >0) {
+                    const fileName = img.path.split('\\').pop() + '.' + img.name.split('.').pop();
+                    await fsPromise.copyFile(img.path, __dirname + '\\..\\public\\img\\books\\' + fileName);
+                    await fsPromise.rm(img.path);
+                    fields.img = process.env.CDN_IMG + '/img/books/' + fileName;
+                }
+                await productService.store(fields);
+                // Increase number of books of Category
+                await categoryService.increaseNum(fields.categoryID);
+                res.redirect('/products');
+
+                console.log(files);
+            });
         } catch (err) { next(err) };
     }
 

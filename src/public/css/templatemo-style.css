@@ -717,3 +717,9 @@ input[type="checkbox"]:focus {
 .link-edit:hover{
   color: wheat;
 }
+
+#imgPreview{
+  object-fit: contain;
+  max-height: 500px;
+}
+
