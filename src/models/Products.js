@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 const slug = require('mongoose-slug-generator');
 mongoose.plugin(slug);
 const Schema = mongoose.Schema;
@@ -17,6 +19,8 @@ const Product = new Schema({
     slug: { type: String, slug: ['name', 'author'], unique: true },
     categoryID: ObjectId,
 }, { timestamps: true });
+
+Product.plugin(mongoosePaginate);
 
 // Model name => collection
 module.exports = mongoose.model('Product', Product);

@@ -6,22 +6,33 @@ const productService = require('../models/modelServices/ProductService');
 const categoryService = require('../models/modelServices/categoryService');
 
 
-const currentPage= 'product';
+const currentTab= 'product';
+const ITEM_PER_PAGE = 10;
 
 class ProductsController {
 
     // [GET] /products
     async index(req, res, next) {
         try{
-            const products = await productService.list();
+            const page = req.query.page || 1;
+            const paginate = await productService.list(page, ITEM_PER_PAGE);
             const categories = await categoryService.list();
-            res.render('products/products', {products, categories, currentPage});
+            res.render('products/products', {
+                products: paginate.docs,
+                categories,
+                currentTab,
+                currentPage: paginate.page,
+                hasPrevPage: paginate.hasPrevPage,
+                hasNextPage: paginate.hasNextPage,
+                totalPages: paginate.totalPages,
+
+            });
          } catch(err) { next(err) };
     }
     // [GET] /products/create-product
     async createProduct(req, res){
         const categories = await categoryService.list();
-        res.render('products/create-product', { categories, currentPage })
+        res.render('products/create-product', { categories, currentTab })
     }
 
     // [POST] /products/store
@@ -66,7 +77,7 @@ class ProductsController {
             const categories = await categoryService.list();
             const product = await productService.findByID(req.params.id);
             product.categoryID = product.categoryID.toString();
-            res.render('products/edit-product', { product, categories, currentPage });  
+            res.render('products/edit-product', { product, categories, currentTab });  
         } catch(err) { next(err) }; 
     }
 

@@ -29,10 +29,6 @@ app.use(methodOverride('_method'))
 app.engine('.hbs', exphbs({
     extname: '.hbs',
     helpers: {
-        select: function (value, label, selectedValue){
-            var selectedProperty = value == selectedValue ? 'selected="selected"' : '';
-            return new Handlebars.SafeString('<option value="' + value + '"' +  selectedProperty + '>' + label + "</option>");
-        },
         ifEquals: function (arg1, arg2, options) {
             return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
         },

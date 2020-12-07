@@ -1,9 +1,9 @@
 
-const currentPage = 'dashboard'
+const currentTab = 'dashboard'
 class DashboardController{
     //[GET/DASHBOARD]
     index(req, res){
-        res.render('dashboard', {currentPage});
+        res.render('dashboard', {currentTab});
     }
 }
 

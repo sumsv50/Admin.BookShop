@@ -1,8 +1,15 @@
 const Products = require('../Products');
 const {bodyToMongoose} = require('../../util/bodyToMongoose');
-module.exports.list = async () => {
-    const products = await Products.find({}).lean();
-    return products;
+
+
+
+module.exports.list = async (page, itemPerPage) => {
+    const paginate = await Products.paginate({}, {
+        page: page,
+        limit: itemPerPage,
+        lean: true,
+    });
+    return paginate;
 }
 
 module.exports.store = async (reqBody) => {
