@@ -12,6 +12,12 @@ module.exports.list = async (query, page, itemPerPage) => {
     return paginate;
 }
 
+module.exports.countBooks = async () => {
+    const numOfBooks = await Products.countDocuments({});
+    return numOfBooks;
+}
+
+
 module.exports.store = async (reqBody) => {
     const formData = bodyToMongoose(reqBody);
     const product = new Products(formData);
@@ -30,3 +36,4 @@ module.exports.updateOne = async (id, reqBody) => {
 module.exports.deleteByID = async (id) => {
     await Products.deleteOne({_id: id});
 }
+

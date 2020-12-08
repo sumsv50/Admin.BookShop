@@ -20,6 +20,7 @@ class ProductsController {
             const key = req.query.key;
 
             const query = {}; 
+            const numOfBooks = await productService.countBooks();
             
             if(key) {
                 query.name = new RegExp(key,'i');
@@ -33,6 +34,7 @@ class ProductsController {
             const categories = await categoryService.list();
             res.render('products/products', {
                 products: paginate.docs,
+                numOfBooks,
                 categories,
                 currentTab,
                 currentPage: paginate.page,

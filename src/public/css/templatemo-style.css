@@ -751,3 +751,7 @@ a:not([href]):not([tabindex]){
   padding: .375rem .75rem;
 }
 
+#myToast{
+  flex-basis: auto;
+}
+
