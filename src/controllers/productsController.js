@@ -3,7 +3,7 @@ const formidable = require('formidable');
 const fs = require('fs'); 
 const fsPromise = fs.promises;
 
-const productService = require('../models/modelServices/ProductService');
+const productService = require('../models/modelServices/productService');
 const categoryService = require('../models/modelServices/categoryService');
 
 
