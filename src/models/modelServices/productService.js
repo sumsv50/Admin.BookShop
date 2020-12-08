@@ -3,8 +3,8 @@ const {bodyToMongoose} = require('../../util/bodyToMongoose');
 
 
 
-module.exports.list = async (page, itemPerPage) => {
-    const paginate = await Products.paginate({}, {
+module.exports.list = async (query, page, itemPerPage) => {
+    const paginate = await Products.paginate(query, {
         page: page,
         limit: itemPerPage,
         lean: true,

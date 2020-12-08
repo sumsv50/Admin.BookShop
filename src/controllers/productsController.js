@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const formidable = require('formidable');
 const fs = require('fs'); 
 const fsPromise = fs.promises;
@@ -15,7 +16,20 @@ class ProductsController {
     async index(req, res, next) {
         try{
             const page = req.query.page || 1;
-            const paginate = await productService.list(page, ITEM_PER_PAGE);
+            const category = req.query.category;
+            const key = req.query.key;
+
+            const query = {}; 
+            
+            if(key) {
+                query.name = new RegExp(key,'i');
+            }
+            if(category) {
+                query.categoryID = category;
+            };
+
+
+            const paginate = await productService.list(query, page, ITEM_PER_PAGE);
             const categories = await categoryService.list();
             res.render('products/products', {
                 products: paginate.docs,
@@ -25,7 +39,8 @@ class ProductsController {
                 hasPrevPage: paginate.hasPrevPage,
                 hasNextPage: paginate.hasNextPage,
                 totalPages: paginate.totalPages,
-
+                currentCategory: category,
+                key,
             });
          } catch(err) { next(err) };
     }

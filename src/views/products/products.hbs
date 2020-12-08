@@ -6,6 +6,16 @@
         <div class="row tm-content-row">
             <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
                 <div class="tm-bg-primary-dark tm-block tm-block-products">
+                    <div class="row justify-content-end">
+                    <div class="col-5 input-group mb-3">
+                        <input  id="txtKey" type="text" class="form-control txtSearch" placeholder="Search"
+                            aria-label="Search" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary btnSearch" type="button"
+                            id="btnSearch" onclick="onClickSearch()">
+                            <i class="fas fa-search" ></i>
+                        </button>
+                    </div>
+                    </div>
                     <div class="tm-product-table-container">
                         <table class="table table-hover tm-table-small tm-product-table">
                             <thead>
@@ -44,12 +54,12 @@
                         </table>
                         </div>
                         
-                        
-                        <nav aria-label="Page navigation example align-items-end">
-                            <ul id="pagination-wrapper" class="pagination">
-                                
-                            </ul>
-                        </nav>
+                        <div class="row justify-content-center">
+                            <nav aria-label="Page navigation example align-items-end">
+                                <ul id="pagination-wrapper" class="pagination">   
+                                </ul>
+                            </nav>
+                        </div>
                         
                         <!-- table container -->
                         <a href="products/create-product" class="btn btn-primary btn-block text-uppercase mb-3">Add new
@@ -68,7 +78,10 @@
 
                                 {{#each categories}}
                                 <tr>
-                                    <td class="tm-product-name">{{this.name}} ({{this.numOfBook}})</td>
+                                    <td class="tm-product-name">
+                                        <a {{#ifEquals this._id ../currentCategory}} class="active" {{/ifEquals}}
+                                            href="products?category={{this._id}}">{{this.name}} ({{this.numOfBook}})</a>
+                                    </td>
                                     <td class="text-center">
 
                                         {{!-- --------Button delete Category-------- --}}
@@ -167,6 +180,8 @@
 
     <script src="js/jquery-3.3.1.min.js"></script>
     <script>
+
+       
         var productId;
         var categoryId;
         var btnDeleteProduct = document.getElementById('btnDeleteProduct');
@@ -239,12 +254,16 @@
         var currentPage = {{currentPage}};
         var pStart = 1;
         var pEnd = totalPages;
+        var urlParams = new URLSearchParams(window.location.search);
+        var urlParamsString;
 
         const wrapper = document.getElementById('pagination-wrapper');
       
-        //wrapper.innerHTML = '';
+        urlParams.set('page', '1');
+        urlParamsString = urlParams.toString();
+        
         wrapper.innerHTML =`<li class="page-item {{#unless hasPrevPage}}disabled{{/unless}}">
-                                <a class="page-link" href="/products?page=1" aria-label="First">
+                                <a class="page-link" href="products?${urlParams}" aria-label="First">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>`;
@@ -259,7 +278,8 @@
             if(i == currentPage){
                 wrapper.innerHTML += `<li class="page-item active"><a class="page-link">${i}</a></li>`;
             } else {
-                wrapper.innerHTML += `<li class="page-item"><a class="page-link" href="/products?page=${i}">${i}</a></li>`;
+                urlParams.set('page', i);
+                wrapper.innerHTML += `<li class="page-item"><a class="page-link" href="products?${urlParams}">${i}</a></li>`;
             }
         }
 
@@ -267,12 +287,30 @@
             wrapper.innerHTML += `<li class="page-item"><a class="page-link">...</a></li>`;
         }
 
+        urlParams.set('page', totalPages);
         wrapper.innerHTML += `<li class="page-item {{#unless hasNextPage}}disabled{{/unless}}"">
-                                    <a class="page-link" href="/products?page=${totalPages}" aria-label="Last">
+                                    <a class="page-link" href="/products?${urlParams}" aria-label="Last">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>`
                             
+        //---------------SEARCH--------------------//
+        var txtKey = document.getElementById('txtKey');
+        
+        //set key user have been search
+        {{#if key}} txtKey.value = '{{key}}' {{/if}};
+        
+        txtKey.addEventListener('keyup', ()=> {
+            if (event.keyCode === 13) {
+                document.getElementById("btnSearch").click();
+            }
+        })
+        
+        onClickSearch = () => {
+            urlParams.delete('page');
+            urlParams.set('key', txtKey.value);
+            window.location = `/products?${urlParams}`;
+        }
 
     </script>
 

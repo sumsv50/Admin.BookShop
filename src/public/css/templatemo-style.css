@@ -17,11 +17,19 @@ body {
 }
 a {
   transition: all 0.3s ease;
+  color: white;
 }
 a:focus,
 a:hover {
   text-decoration: none;
+  color: #f5a623;
 }
+a.active{
+  color:  #f5a623;
+  pointer-events: none;
+  cursor: default;
+}
+
 button:focus {
   outline: 0;
 }
@@ -734,5 +742,12 @@ input[type="checkbox"]:focus {
 
 a:not([href]):not([tabindex]){
   color:white;
+}
+
+.txtSearch{
+  height: calc(2.25rem + 2px);
+}
+.btnSearch{
+  padding: .375rem .75rem;
 }
 
