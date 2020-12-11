@@ -5,7 +5,7 @@ const fsPromise = fs.promises;
 
 const productService = require('../models/modelServices/productService');
 const categoryService = require('../models/modelServices/categoryService');
-
+const cloudinary = require('../config/Cloudinary/index');
 
 const currentTab= 'product';
 const ITEM_PER_PAGE = 10;
@@ -58,24 +58,24 @@ class ProductsController {
             const form = formidable({ multiples: true });
 
             form.parse(req, async (err, fields, files) => {
-                if (err) {
-                    next(err);
-                    return;
-                }
+                try{
+                    if (err) {
+                        next(err);
+                        return;
+                    }
 
-                const img = files.img;
-                if(img && img.size >0) {
-                    const fileName = img.path.split('\\').pop() + '.' + img.name.split('.').pop();
-                    await fsPromise.copyFile(img.path, __dirname + '\\..\\public\\img\\books\\' + fileName);
-                    await fsPromise.rm(img.path);
-                    fields.img = process.env.CDN_IMG + '/img/books/' + fileName;
-                }
-                await productService.store(fields);
-                // Increase number of books of Category
-                await categoryService.increaseNum(fields.categoryID);
-                res.redirect('/products');
-
-                console.log(files);
+                    const img = files.img;
+                    if(img && img.size >0) {
+                    
+                        const result = await cloudinary.uploadToCloudinary(img.path);
+                        fields.img = result.url;
+                    
+                    }
+                    await productService.store(fields);
+                    // Increase number of books of Category
+                    await categoryService.increaseNum(fields.categoryID);
+                    res.redirect('/products');
+                }catch(err){ next(err) };
             });
         } catch (err) { next(err) };
     }
