@@ -73,7 +73,7 @@ class ProductsController {
                     }
                     await productService.store(fields);
                     // Increase number of books of Category
-                    await categoryService.increaseNum(fields.categoryID);
+                    await categoryService.increaseNum(mongoose.Types.ObjectId(fields.categoryID));
                     res.redirect('/products');
                 }catch(err){ next(err) };
             });
