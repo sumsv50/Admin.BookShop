@@ -18,11 +18,11 @@
     "npm": "^6.14.9"
   },
   "devDependencies": {
-    "node": "^2.0.6"
+    "nodemon": "^2.0.6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/app.js"
+    "start": "node src/app.js"
   },
   "author": "",
   "license": "ISC"
