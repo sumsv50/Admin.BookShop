@@ -1,12 +1,15 @@
 const path = require('path');
 const express = require('express');
 const exphbs = require('express-handlebars');
-const methodOverride = require('method-override')
+const methodOverride = require('method-override');
 require('dotenv').config();
-var moment = require('moment'); // Generate Date
+const moment = require('moment'); // Generate Date
+const session = require("express-session");
 
 
 const Router = require('./routes/index');
+const passport = require('./passport/index');
+const authenticate = require('./middleware/authenticationMiddleware');
 
 const PORT = process.env.PORT || 3000;
 
@@ -21,6 +24,22 @@ app.use(express.static(path.join(__dirname,'public')));
 //Middleware parse req.body
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+
+//Middleware passport
+app.use(session({ 
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: false,
+ }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(authenticate);
+
+app.use(function (req, res, next) {
+    res.locals.user = req.user;
+    next();
+  })
 
 //Method
 app.use(methodOverride('_method'))
@@ -38,8 +57,8 @@ app.engine('.hbs', exphbs({
     }
 })
 );
-app.set('view engine', '.hbs');
 
+app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 
