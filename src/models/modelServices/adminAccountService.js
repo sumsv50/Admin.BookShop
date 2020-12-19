@@ -27,3 +27,9 @@ module.exports.checkCredential = async(username, password) => {
         return user;
     } catch(err) { next(err) };
 }
+
+module.exports.checkExist = async (username) => {
+    const isExist = await AdminAccount.exists({username});
+    return isExist;
+
+}

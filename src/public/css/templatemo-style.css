@@ -740,9 +740,9 @@ input[type="checkbox"]:focus {
   max-height: 500px;
 }
 
-a:not([href]):not([tabindex]){
+/* a:not([href]):not([tabindex]){
   color:white;
-}
+} */
 
 .txtSearch{
   height: calc(2.25rem + 2px);
@@ -755,3 +755,6 @@ a:not([href]):not([tabindex]){
   flex-basis: auto;
 }
 
+li:not(.active):not(.disabled){
+  cursor: pointer;
+}
