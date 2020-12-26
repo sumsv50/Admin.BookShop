@@ -33,3 +33,16 @@ module.exports.checkExist = async (username) => {
     return isExist;
 
 }
+
+module.exports.editMyProfile = async (id,  doc) => {
+    return await AdminAccount.updateOne({_id: id}, doc);
+}
+
+module.exports.updatePassword = async (id,  password) => {
+    hash = await bcrypt.hash(password, saltRounds);
+    return await AdminAccount.updateOne({_id: id}, {password: hash});
+}
+
+module.exports.updateAvatar = async (id,  avt_img, public_id_avt) => {
+    return await AdminAccount.updateOne({_id: id}, {avt_img, public_id_avt});
+}

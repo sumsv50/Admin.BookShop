@@ -7,7 +7,7 @@ passport.use(new LocalStrategy(
   async function(username, password, done) {
     const admin = await adminAccountService.checkCredential(username, password);
     if(!admin) {
-        return done(null, false, { message: 'Incorrect username or password!.' });
+        return done(null, false, { message: 'Incorrect username or password!' });
     } else {
         return done(null, admin);
     }

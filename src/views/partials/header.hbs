@@ -63,10 +63,18 @@
                     </ul>
                     {{#if user}}
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link d-block" href="/logout ">
-                                {{user.username}} - <b>Logout</b>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <span>
+                                    <img id='logo-avt' onerror="this.src='/img/avatar-default.jpg'" class='avatar' src={{user.avt_img}}>
+                                    <b> - {{user.username}}</b>
+                                </span>
                             </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/accounts/my-profile">Profile</a>
+                                <a class="dropdown-item" href="/logout">Logout</a>
+                            </div>
                         </li>
                     </ul>
                     {{/if}}

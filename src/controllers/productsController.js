@@ -67,7 +67,7 @@ class ProductsController {
                     const img = files.img;
                     if(img && img.size >0) {
                     
-                        const result = await cloudinary.uploadToCloudinary(img.path);
+                        const result = await cloudinary.uploadToCloudinary(img.path, 'books');
                         fields.img = result.url;
                     
                     }

@@ -32,24 +32,30 @@
                 <div class="tm-bg-primary-dark tm-block tm-block-avatar">
                     <h2 class="tm-block-title">Avatar</h2>
                     <div class="tm-avatar-container">
-                        <img src="img/avatar.png" alt="Avatar" class="tm-avatar img-fluid mb-4" />
-                        <a href="#" class="tm-avatar-delete-link">
+                        <img id="imgPreview" src="/img/avatar-default.jpg" alt="Avatar" class="tm-avatar img-fluid mb-4" />
+                        <a id="btnDeleteImg" class="tm-avatar-delete-link">
                             <i class="far fa-trash-alt tm-product-delete-icon"></i>
                         </a>
                     </div>
-                    <button class="btn btn-primary btn-block text-uppercase">
-                        Upload New Photo
-                    </button>
+                     <input type="button" class="btn btn-primary btn-block mx-auto"
+                        value="UPLOAD PRODUCT IMAGE"
+                        onclick=" document.getElementById('fileInput').click();" />
                 </div>
             </div>
             <div class="tm-block-col tm-col-account-settings">
                 <div class="tm-bg-primary-dark tm-block tm-block-settings">
-                    <h2 class="tm-block-title">Add Admin-Account</h2>
-                    <form method='POST' action="/accounts/store-admin-account" class="tm-signup-form row">
+                    <h2 class="tm-block-title">Create Admin-Account</h2>
+                    <form method='POST' action="/accounts/store-admin-account" class="tm-signup-form row"
+                        enctype="multipart/form-data">
+                        <input name="adminImg" id="fileInput" type="file" accept="image/*" hidden="hidden" />
                         <div class="form-group col-lg-6">
                             <label for="username">Account Name*</label>
                             <input id="username" name="username" type="text" class="form-control validate" required/>
                             <div id="username-feedback" class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="name">Name</label>
+                            <input id="name" name="name" type="text" class="form-control validate" />
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="email">Account Email*</label>
@@ -86,7 +92,10 @@
     </div>
     <script src="js/jquery-3.3.1.min.js"></script>
     <!-- https://jquery.com/download/ -->
-    <script src="js/accounts.js"></script>
+     <script src="js/accounts/accounts.js"></script>
+    <script src="js/function/imgPreview.js"></script>
+   
+    
 </body>
 
 </html>

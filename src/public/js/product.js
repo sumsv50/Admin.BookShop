@@ -19,7 +19,6 @@ function paginationBtn(totalPages, currentPage, hasPrevPage, hasNextPage) {
    var template = Handlebars.compile($('#btnPaginate-item').html());
    var paginateHtml = template({totalPages, currentPage, hasPrevPage, hasNextPage});
    $('#pagination-wrapper').html(paginateHtml);
-
 }
 
 

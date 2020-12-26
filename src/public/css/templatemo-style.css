@@ -758,3 +758,61 @@ input[type="checkbox"]:focus {
 li:not(.active):not(.disabled){
   cursor: pointer;
 }
+
+
+/* Avatar */
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/*Form control*/
+.form-control:disabled{
+  background-color: #344150;
+}
+
+.icon-edit {
+  width: 15px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.btn-profile {
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-top: 40px;
+  margin-left: 2px;
+}
+
+.btn-save-avt {
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.form-error-message {
+  color: rgb(224, 18, 18);
+  margin-top: 10px;
+}
+
+#notification-pass.success{
+  border: solid rgb(9, 243, 28) 1px;
+  border-radius: 5px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color:rgb(9, 243, 28);
+}
+
+#notification-pass.fail{
+  border: solid rgb(248, 162, 1) 1px;
+  border-radius: 5px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color:rgb(248, 162, 1);
+}
+
+#failure-flash {
+  color: rgb(238, 28, 28);
+}

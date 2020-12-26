@@ -14,7 +14,7 @@ router.get('/login', siteController.login);
 // [POST]/ Login
 router.post('/login',  passport.authenticate('local', { successRedirect: '/',
                                                         failureRedirect: '/login',
-                                                        failureFlash: false }));
+                                                        failureFlash: true }));
 
 // [GET]/ Logout
 router.get('/logout', function(req, res){

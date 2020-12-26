@@ -43,3 +43,6 @@ isExist = (username) => {
         }
     })
 }
+
+// View không sử dụng button này
+var btnSaveAvt = undefined;

@@ -5,7 +5,7 @@ const methodOverride = require('method-override');
 require('dotenv').config();
 const moment = require('moment'); // Generate Date
 const session = require("express-session");
-
+const flash = require('connect-flash');
 
 const Router = require('./routes/index');
 const passport = require('./passport/index');
@@ -32,6 +32,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: {},
  }));
+app.use(flash())
 app.use(passport.initialize());
 app.use(passport.session());
 

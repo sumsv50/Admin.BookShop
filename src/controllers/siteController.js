@@ -11,7 +11,7 @@ class SiteController{
         if(req.user) {
             res.redirect('/products');
         } else {
-            res.render('login');
+            res.render('login', { message: req.flash('error') });
         }
     }
 
