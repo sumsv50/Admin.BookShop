@@ -1,6 +1,7 @@
 function replaceProducts(url) {
     var template = Handlebars.compile($('#product-list-item').html());
     $.getJSON (url, function(result) {
+
         var productHtml = template({products: result.products});
         $('#products_list').html(productHtml);
         

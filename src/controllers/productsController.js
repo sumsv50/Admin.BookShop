@@ -64,13 +64,23 @@ class ProductsController {
                         return;
                     }
 
-                    const img = files.img;
-                    if(img && img.size >0) {
-                    
-                        const result = await cloudinary.uploadToCloudinary(img.path, 'books');
-                        fields.img = result.url;
+                    const imgs = files.img;
+                    var arrImg = [];
+            
+                    if(Array.isArray(imgs)){
+                        for(const img of imgs) {
+                            var result = await cloudinary.uploadToCloudinary(img.path, 'books');
+                            
+                            arrImg.push({url: result.url, public_id: result.public_id});
+                        }
+                    } else if (imgs && imgs.size >0) {
+                        const result = await cloudinary.uploadToCloudinary(imgs.path, 'books');
+
+                        arrImg.push({url: result.url, public_id: result.public_id});
                     
                     }
+                    fields.img = arrImg;
+                    
                     await productService.store(fields);
                     // Increase number of books of Category
                     await categoryService.increaseNum(mongoose.Types.ObjectId(fields.categoryID));
@@ -94,24 +104,69 @@ class ProductsController {
             const categories = await categoryService.list();
             const product = await productService.findByID(req.params.id);
             product.categoryID = product.categoryID.toString();
+           
             res.render('products/edit-product', { product, categories, currentTab });  
         } catch(err) { next(err) }; 
     }
 
     // [PUT] /products/:id
     async update(req, res, next){
-        try{
-            const oldProduct = await productService.findByID(req.params.id);
-            const categoryID_old = oldProduct.categoryID;
+        const form = formidable({ multiples: true });
 
-            await productService.updateOne(req.params.id, req.body);
-            if(categoryID_old != req.body.categoryID){
-                await categoryService.decreaseNum(categoryID_old);
-                await categoryService.increaseNum(req.body.categoryID);
-            }
+        form.parse(req, async (err, fields, files) => {
+            try{
+                if (err) {
+                    next(err);
+                    return;
+                }
 
-            res.redirect('/products');
-        }catch(err) { next(err) };
+                const oldProduct = await productService.findByID(req.params.id);
+                const categoryID_old = oldProduct.categoryID;
+
+                fields.img = oldProduct.img;
+
+                //Xóa các cuốn sách đã có do người dùng chỉ định.
+                var photos_remove = fields.photos_remove;
+                photos_remove = photos_remove.split(" ");
+                photos_remove.splice(0, 1);
+
+                photos_remove.sort(function(a, b){return b - a});
+                for(const index of photos_remove) {
+                    var public_id = oldProduct.img[+index].public_id;
+                    if(public_id) {
+                        cloudinary.delete_resources(public_id, {});
+                    }
+                    fields.img.splice(+index, 1);
+                }
+
+                console.log("img:", fields.img);
+                
+                //Thêm vào các cuốn sách do người dùng thêm vào.
+                const imgs = files.img;
+        
+                if(Array.isArray(imgs)){
+                    for(const img of imgs) {
+                        var result = await cloudinary.uploadToCloudinary(img.path, 'books');
+                        
+                        fields.img.push({url: result.url, public_id: result.public_id});
+                    }
+                } else if (imgs && imgs.size >0) {
+                    const result = await cloudinary.uploadToCloudinary(imgs.path, 'books');
+
+                    fields.img.push({url: result.url, public_id: result.public_id});
+                
+                }
+
+                await productService.updateOne(req.params.id, fields);
+                if(categoryID_old != fields.categoryID){
+                    await categoryService.decreaseNum(categoryID_old);
+                    await categoryService.increaseNum(fields.categoryID);
+                   
+                }
+                res.redirect('/products');
+            } catch(err) {next(err)}; 
+        });
+
     }
 
     // [DELETE] /products/:id/:categoryID
