@@ -1,4 +1,5 @@
 const adminAccountService = require('../models/modelServices/adminAccountService');
+const userAccountService = require('../models/modelServices/userAccountService');
 const formidable = require('formidable');
 const cloudinary = require('../config/Cloudinary/index');
 
@@ -44,7 +45,10 @@ class AccountsController{
         }
     }
 
-
+    // [GET] accounts/:id/view
+    async view(req, res, next) {
+        res.send('ahihi');
+    }
 
 }
 

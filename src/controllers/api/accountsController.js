@@ -1,7 +1,10 @@
 const { error } = require('jquery');
 const formidable = require('formidable');
 const adminAccountService = require('../../models/modelServices/adminAccountService');
+const userAccountService = require('../../models/modelServices/userAccountService');
 const cloudinary = require('../../config/Cloudinary/index');
+
+const ITEM_PER_PAGE = 5;
 
 class AccountsController{
     //[GET] /
@@ -83,7 +86,58 @@ class AccountsController{
         });
 
     }
+
+    // [GET] api/accounts
+    async list(req, res, next) {
+        const page = req.query.page || 1;
+        var paginate = undefined;
+        if(req.query.accountType == "user") {
+            paginate = await userAccountService.list({}, page, ITEM_PER_PAGE);
+        } else if(req.query.accountType == "admin") {
+            paginate = await adminAccountService.list({}, page, ITEM_PER_PAGE);
+        }
+
+        res.json({
+            docs: paginate.docs,
+            currentPage: paginate.page,
+            hasPrevPage: paginate.hasPrevPage,
+            hasNextPage: paginate.hasNextPage,
+            totalPages: paginate.totalPages,
+        });
+
+    }
+
+    // [GET] api/accounts/edit-status
+    async editStatus(req, res, next) {
+       try {
+            var accountType = req.query.accountType;
+            var behavior = req.query.behavior;
+            var id = req.query.id;
+            var newStatus, currentStatus;
+            var result;
+            if(behavior == "Block") {
+                newStatus = "BLOCK";
+                currentStatus = "ACTIVE";
+            } else if (behavior == "UnBlock") {
+                newStatus = "ACTIVE";
+                currentStatus = "BLOCK";
+            }
+            
+            if(accountType == "user"){
+                result = await userAccountService.editStatus(id, newStatus);
+            } else if(accountType == "admin" && req.user._id != id){
+                result = await adminAccountService.editStatus(id, newStatus);
+            }
+            
+            if(!result.nModified){
+                throw("ERROR");
+            }
+            res.json({newStatus});
+        }catch(err) {
+            res.json({newStatus: currentStatus});
+        }
     
+}
 }
 
 module.exports = new AccountsController;

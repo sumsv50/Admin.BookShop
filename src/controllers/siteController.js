@@ -8,7 +8,7 @@ class SiteController{
 
     //[GET] /login
     login(req, res){
-        if(req.user) {
+        if(req.user && req.user.status == "ACTIVE") {
             res.redirect('/products');
         } else {
             res.render('login', { message: req.flash('error') });

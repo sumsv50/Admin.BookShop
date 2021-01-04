@@ -3,7 +3,7 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 
 const Schema = mongoose.Schema;
 
-const AdminAccount = new Schema({
+const UserAccount = new Schema({
     username: String,
     password: String,
     name: String,
@@ -12,10 +12,8 @@ const AdminAccount = new Schema({
     public_id_avt: String,
     phone: String,
     status: { type: String, default: 'ACTIVE' },
-
 }, { timestamps: true });
 
-AdminAccount.plugin(mongoosePaginate);
-
+UserAccount.plugin(mongoosePaginate);
 // Model name => collection
-module.exports = mongoose.model('AdminAccount', AdminAccount, 'admin_accounts');
+module.exports = mongoose.model('UserAccount', UserAccount, 'user_accounts');

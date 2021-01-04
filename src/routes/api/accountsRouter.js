@@ -16,4 +16,10 @@ router.get('/edit-my-password', accountsController.editMyPassword);
 // [POST] /api/accounts/edit-my-avatar 
 router.post('/edit-my-avatar', accountsController.editMyAvatar);
 
+// [GET] api/accounts
+router.get('/', accountsController.list);
+
+// [GET] api/accounts/edit-status
+router.get('/edit-status', accountsController.editStatus);
+
 module.exports = router;

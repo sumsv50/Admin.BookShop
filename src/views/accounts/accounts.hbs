@@ -16,17 +16,73 @@
                 <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
                     <h2 class="tm-block-title">List of Accounts</h2>
                     <p class="text-white">Accounts</p>
-                    <select class="custom-select">
-                        <option value="0">Select account</option>
-                        <option value="1">Admin</option>
-                        <option value="2">Editor</option>
-                        <option value="3">Merchant</option>
-                        <option value="4">Customer</option>
+                    <select id="select-user" class="custom-select">
+                        <option value="0" selected disabled>Select account</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
                     </select>
+                </div>
+
+                <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+
+                    <div class="row justify-content-end">
+
+                        {{#if key}}
+                        <div id="myToast" class="toast"  data-autohide="false">
+                            <div class="toast-header">
+                                <strong >{{key}}</strong>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"
+                                    onclick="onClickBtnKey()">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                        {{/if}}
+
+
+
+                        <div class="col-5 input-group mb-3">
+                            <input id="txtKey" type="text" class="form-control txtSearch" placeholder="Search" aria-label="Search"
+                                aria-describedby="button-addon2">
+                            <button class="btn btn-outline-secondary btnSearch" type="button" id="btnSearch" onclick="onClickSearch()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tm-product-table-container">
+                        <table class="table table-hover tm-table-small tm-product-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">&nbsp;</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Status</th>
+
+                                    <th scope="col">CREATED AT</th>
+                                    <th scope="col">&nbsp;</th>
+                                    <th scope="col">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody id="items-list">
+                            </tbody>
+                        </table>
+                        </div>
+                        
+                        <div class="row justify-content-center">
+                            <nav aria-label="Page navigation example align-items-end">
+                                <ul id="pagination-wrapper" class="pagination">   
+                                </ul>
+                            </nav>
+                        </div>
+                        
+                        <!-- table container -->
+                        {{!-- <a href="products/create-product" class="btn btn-primary btn-block text-uppercase mb-3">Add new
+                            product</a> --}}
                 </div>
             </div>
         </div>
         <!-- row -->
+        
         <div class="row tm-content-row">
             <div class="tm-block-col tm-col-avatar">
                 <div class="tm-bg-primary-dark tm-block tm-block-avatar">
@@ -90,12 +146,30 @@
         </div>
     </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    
+    <script type="text/x-handlebars" id="list-item-template">
+        {{>template/listAccountTemplate}}
+    </script>
+    <script type="text/x-handlebars" id="btnPaginate-item">
+        {{>btnPaginateTemplate}}
+    </script>
+
     <script src="js/jquery-3.3.1.min.js"></script>
     <!-- https://jquery.com/download/ -->
-     <script src="js/accounts/accounts.js"></script>
+    <script src='js/function/paginate.js'></script>
+    <script src="js/accounts/accounts-add-new-admin.js"></script>
+    <script src="js/accounts/account-list-accounts.js"></script>
     <script src="js/function/imgPreview.js"></script>
-   
-    
+    <script>
+        var meId;
+        {{#if user}}
+        meId = "{{user._id}}";
+        {{/if}}
+        var type = "accounts";
+        var behavior = "replaceAccounts";
+        var totalPages, currentPage, hasPrevPage, hasNextPage;
+    </script>
 </body>
 
 </html>

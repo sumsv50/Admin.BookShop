@@ -77,7 +77,6 @@ button:focus {
   box-shadow: 1px 1px 5px 0 #455c71;
   min-height: 350px;
   height: 100%;
-  max-height: 450px;
 }
 .tm-block-avatar,
 .tm-block-settings {
@@ -451,9 +450,7 @@ input[type="checkbox"]:focus {
   min-height: 650px;
 }
 .tm-product-table-container {
-  max-height: 465px;
   margin-bottom: 15px;
-  overflow-y: scroll;
 }
 .tm-product-table tr {
   font-weight: 600;
@@ -815,4 +812,28 @@ li:not(.active):not(.disabled){
 
 #failure-flash {
   color: rgb(238, 28, 28);
+}
+
+#select-user {
+  margin-bottom: -50px;
+}
+
+.fa-circle {
+  color:rgb(46, 216, 60);
+}
+.fa-ban {
+  color: rgb(182, 9, 9);
+}
+
+#created-at-column{
+  width: 190px;
+}
+#unit-sold-column {
+  width: 70px;
+}
+#author-column {
+  width: 200px;
+}
+#bin-column{
+  width: 70px;
 }

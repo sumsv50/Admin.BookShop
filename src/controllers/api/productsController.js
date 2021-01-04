@@ -2,7 +2,7 @@ const productService = require('../../models/modelServices/productService');
 const categoryService = require('../../models/modelServices/categoryService');
 
 const currentTab= 'product';
-const ITEM_PER_PAGE = 10;
+const ITEM_PER_PAGE = 7;
 
 class ProductsController {
 

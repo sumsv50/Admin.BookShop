@@ -13,4 +13,7 @@ router.get('/my-profile', accountsController.showMyProfile);
 // [POST] accounts/store-admin-account
 router.post('/store-admin-account', accountsController.storeAdminAccount);
 
+// [GET] accounts/:id/view
+router.get('/:id/view', accountsController.view);
+
 module.exports = router;

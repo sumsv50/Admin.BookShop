@@ -4,7 +4,7 @@
 
     <div class="container-fluid mt-5">
         <div class="row tm-content-row">
-            <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
+            <div class="col-sm-12 col-md-12 col-lg-9 col-xl-9 tm-block-col">
                 <div class="tm-bg-primary-dark tm-block tm-block-products">
 
                    
@@ -50,26 +50,24 @@
                         <table class="table table-hover tm-table-small tm-product-table">
                             <thead>
                                 <tr>
-                                    <th scope="col">&nbsp;</th>
                                     <th scope="col">BOOK NAME</th>
-                                    <th scope="col">AUTHOR</th>
-                                    <th scope="col">UNIT SOLD</th>
+                                    <th id="author-column" scope="col">AUTHOR</th>
+                                    <th id="unit-sold-column" scope="col">UNIT SOLD</th>
 
-                                    <th scope="col">CREATED AT</th>
-                                    <th scope="col">&nbsp;</th>
+                                    <th id="created-at-column" scope="col">CREATED AT</th>
+                                    <th id="bin-column" scope="col">&nbsp;</th>
                                 </tr>
                             </thead>
-                            <tbody id="products_list">
+                            <tbody id="items-list">
 
                                 {{#each products}}
                                 <tr>
-                                    <th scope="row"><input type="checkbox" /></th>
                                     <td class="tm-product-name">
                                         <a class='link-edit' href='products/{{this._id}}/edit'>{{this.name}}</a>
                                     </td>
                                     <td>{{this.author}}</td>
                                     <td>0</td>
-                                    <td>{{generateDate this.createdAt "kk:mm:ss | DD/MM/YYYY "}}</td>
+                                    <td>{{generateDate this.createdAt "MM/DD/YYYY, h:mm:ss A"}}</td>
                                     <td>
                                         <a href="#" class="tm-product-delete-link" data-id="{{this._id}}"
                                             data-cate="{{this.categoryID}}" data-name="{{this.name}}"
@@ -99,7 +97,7 @@
                     </button> --}}
                 </div>
             </div>
-            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 tm-block-col">
+            <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3 tm-block-col">
                 <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
                     <h2 class="tm-block-title">Book Categories</h2>
                     <div class="tm-product-table-container">
@@ -209,14 +207,14 @@
 
 <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 <script src="js/jquery-3.3.1.min.js"></script>
-<script type="text/x-handlebars" id="product-list-item">
+<script src='js/function/paginate.js'></script>
+<script src='/js/product.js'></script>
+<script type="text/x-handlebars" id="list-item-template">
     {{>productsTemplate}}
 </script>
 <script type="text/x-handlebars" id="btnPaginate-item">
     {{>btnPaginateTemplate}}
 </script>
-<script src='/js/product.js'></script>
-
 
 <script>
     $(document).ready(function () {
@@ -224,12 +222,16 @@
     })
 
         //Paginate button
-        var totalPages = {{totalPages}};
-        var currentPage = {{currentPage}};
-        var hasPrevPage = {{hasPrevPage}};
-        var hasNextPage = {{hasNextPage}};
+        var type = "products";
+        var behavior = "replaceProducts";
+        var totalPages, currentPage, hasPrevPage, hasNextPage;
+        {{#if totalPages }} totalPages = {{totalPages}} {{/if}};
+        {{#if currentPage }} currentPage = {{currentPage}} {{/if}};
+        {{#if hasPrevPage }} hasPrevPage = {{hasPrevPage}} {{/if}};
+        {{#if hasNextPage }} hasNextPage = {{hasNextPage}} {{/if}};
 
-        paginationBtn(totalPages, currentPage, hasPrevPage, hasNextPage);
+
+        paginationBtn(behavior, type, totalPages, currentPage, hasPrevPage, hasNextPage);
        
 
         //---------------SEARCH--------------------//
@@ -261,8 +263,8 @@
             window.location = `/products?${urlParams}`;
         }
 
-
+   
        
     </script>
-
+   
 </body>

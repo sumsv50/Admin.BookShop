@@ -46,3 +46,16 @@ module.exports.updatePassword = async (id,  password) => {
 module.exports.updateAvatar = async (id,  avt_img, public_id_avt) => {
     return await AdminAccount.updateOne({_id: id}, {avt_img, public_id_avt});
 }
+
+module.exports.list = async (query, page, itemPerPage) => {
+    const paginate = await AdminAccount.paginate(query, {
+        page: page,
+        limit: itemPerPage,
+        lean: true,
+    });
+    return paginate;
+}
+
+module.exports.editStatus = async (id, newStatus) => {
+    return AdminAccount.updateOne({_id: id}, {status: newStatus});
+} 

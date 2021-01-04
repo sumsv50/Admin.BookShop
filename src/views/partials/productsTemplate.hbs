@@ -1,13 +1,13 @@
 
 \{{#each products}}
     <tr>
-        <th scope="row"><input type="checkbox" /></th>
+       
         <td class="tm-product-name">
             <a class='link-edit' href='products/\{{this._id}}/edit'>\{{this.name}}</a>
         </td>
         <td>\{{this.author}}</td>
         <td>0</td>
-        <td>{{generateDate this.createdAt "kk:mm:ss | DD/MM/YYYY "}}</td>
+        <td>\{{this.createdAt}}</td>
         <td>
             <a href="#" class="tm-product-delete-link" data-id="\{{this._id}}"
                 data-cate="\{{this.categoryID}}" data-name="\{{this.name}}"

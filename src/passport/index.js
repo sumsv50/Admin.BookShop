@@ -9,7 +9,11 @@ passport.use(new LocalStrategy(
     if(!admin) {
         return done(null, false, { message: 'Incorrect username or password!' });
     } else {
-        return done(null, admin);
+        if(admin.status != "ACTIVE") {
+          return done(null, false, { message: 'Your account has been blocked!' });
+        } else {
+          return done(null, admin);
+        }
     }
 
   }

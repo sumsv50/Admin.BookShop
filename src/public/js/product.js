@@ -1,28 +1,25 @@
-function replaceProducts(url) {
-    var template = Handlebars.compile($('#product-list-item').html());
-    $.getJSON (url, function(result) {
+// function replaceView(url) {
+//     var template = Handlebars.compile($('#list-item-template').html());
+//     $.getJSON (url, function(result) {
 
-        var productHtml = template({products: result.products});
-        $('#products_list').html(productHtml);
-        
-        totalPages = result.totalPages;
-        currentPage = result.currentPage;
-        hasPrevPage = result.hasPrevPage;
-        hasNextPage = result.hasNextPage;
+//         result.products.forEach(product => {
+//             if(product.createdAt) {
+//                 var date = new Date(product.createdAt);
+//                 product.createdAt = date.toLocaleString();
+//             }
+//         });
+//         var productHtml = template({products: result.products});
+//         $('#items-list').html(productHtml);
+//         totalPages = result.totalPages;
+//         currentPage = result.currentPage;
+//         hasPrevPage = result.hasPrevPage;
+//         hasNextPage = result.hasNextPage;
 
-        paginationBtn(totalPages, currentPage, hasPrevPage, hasNextPage);
-        const newurl = url.replace('/api','');
-        history.pushState({}, 'Product Admin - Dashboard', newurl);
-    });
-}
-
-function paginationBtn(totalPages, currentPage, hasPrevPage, hasNextPage) {
-   var template = Handlebars.compile($('#btnPaginate-item').html());
-   var paginateHtml = template({totalPages, currentPage, hasPrevPage, hasNextPage});
-   $('#pagination-wrapper').html(paginateHtml);
-}
-
-
+//         paginationBtn(behavior, type, totalPages, currentPage, hasPrevPage, hasNextPage);
+//         const newurl = url.replace('/api','');
+//         history.pushState({}, 'Product Admin - Dashboard', newurl);
+//     });
+// }
 
 var productId;
 var categoryId;
