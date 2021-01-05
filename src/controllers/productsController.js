@@ -71,12 +71,12 @@ class ProductsController {
                         for(const img of imgs) {
                             var result = await cloudinary.uploadToCloudinary(img.path, 'books');
                             
-                            arrImg.push({url: result.url, public_id: result.public_id});
+                            arrImg.push({url: result.secure_url, public_id: result.public_id});
                         }
                     } else if (imgs && imgs.size >0) {
                         const result = await cloudinary.uploadToCloudinary(imgs.path, 'books');
 
-                        arrImg.push({url: result.url, public_id: result.public_id});
+                        arrImg.push({url: result.secure_url, public_id: result.public_id});
                     
                     }
                     fields.img = arrImg;
@@ -148,12 +148,12 @@ class ProductsController {
                     for(const img of imgs) {
                         var result = await cloudinary.uploadToCloudinary(img.path, 'books');
                         
-                        fields.img.push({url: result.url, public_id: result.public_id});
+                        fields.img.push({url: result.secure_url, public_id: result.public_id});
                     }
                 } else if (imgs && imgs.size >0) {
                     const result = await cloudinary.uploadToCloudinary(imgs.path, 'books');
 
-                    fields.img.push({url: result.url, public_id: result.public_id});
+                    fields.img.push({url: result.secure_url, public_id: result.public_id});
                 
                 }
 

@@ -66,7 +66,7 @@ class AccountsController{
 
                     const result = await cloudinary.uploadToCloudinary(img.path, 'admin-img');
                     
-                    await adminAccountService.updateAvatar(user._id, result.url, result.public_id);
+                    await adminAccountService.updateAvatar(user._id, result.secure_url, result.public_id);
 
                     res.status(200).json({isSuccess: true});
 

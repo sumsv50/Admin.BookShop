@@ -49,7 +49,7 @@ class AccountsController{
                     if(img && img.size>0) {
                         const result = await cloudinary.uploadToCloudinary(img.path, 'admin-img');
                         fields.public_id_avt = result.public_id;
-                        fields.avt_img = result.url;
+                        fields.avt_img = result.secure_url;
                     }
 
                     await adminAccountService.addAdmin(fields);
