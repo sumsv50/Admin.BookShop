@@ -2,13 +2,13 @@
     var pStart = 1;
         var pEnd = totalPages;
         var urlParams = new URLSearchParams(window.location.search);
-
+    
         var wrapper = document.getElementById('pagination-wrapper');
 
         urlParams.set('page', '1');
 
         wrapper.innerHTML =`<li class="page-item \{{#unless hasPrevPage}}disabled\{{/unless}}">
-                                <a class="page-link" onclick="${behavior}('/api/${type}?${urlParams}')"
+                                <a class="page-link" onclick="${behavior}('/api/${typeRou}?${urlParams}')"
                                     aria-label="First">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -26,7 +26,7 @@
             } else {
                 urlParams.set('page', i);
                 wrapper.innerHTML += `<li class="page-item"><a class="page-link"
-                    onclick="${behavior}('/api/${type}?${urlParams}')"">${i}</a></li>`;
+                    onclick="${behavior}('/api/${typeRou}?${urlParams}')"">${i}</a></li>`;
             }
         }
 
@@ -37,7 +37,7 @@
         urlParams.set('page', totalPages);
 
         wrapper.innerHTML += `<li class="page-item \{{#unless hasNextPage}}disabled\{{/unless}}"">
-                                    <a class="page-link" onclick="${behavior}('/api/${type}?${urlParams}')" aria-label="Last">
+                                    <a class="page-link" onclick="${behavior}('/api/${typeRou}?${urlParams}')" aria-label="Last">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>`

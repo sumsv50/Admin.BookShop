@@ -1,14 +1,14 @@
 selectionUser = document.querySelector('#select-user');
 const url = "api/accounts"
-var accountType;
 
 var template = Handlebars.compile($('#list-item-template').html());
 
 selectionUser.onchange = function() {
-    accountType = selectionUser.value;
+    type = selectionUser.value;
+    
     $.getJSON(url,
         {
-            accountType,
+            type,
         }
         ,function(result) {
             
@@ -21,7 +21,7 @@ selectionUser.onchange = function() {
                     user.me = true;
                 }
                 user.active = user.status == "ACTIVE" ? true : false;
-
+                user.type = type;
             });
 
 
@@ -29,17 +29,30 @@ selectionUser.onchange = function() {
             $('#items-list').html(accountHtml);
             
             setOnClickListener();
-            console.log(result);
+            
             //paginate;
-          
             totalPages = result.totalPages;
             currentPage = result.currentPage;
             hasNextPage = result.hasNextPage;
             hasPrevPage = result.hasPrevPage;
+
+            //Change URL
+            var newParams = new URLSearchParams(window.location.search);
+
+           // var oldType = newParams.get('type');
+            //console.log(oldType);
+            newParams.set('type', type);
+            newParams.delete('page');
+            var changedUrl =  window.location.pathname +'?' + newParams;
+
+            //if(oldType) {
+                history.replaceState({}, 'Product Admin - Dashboard', changedUrl);
+            //} else {
+            //   history.pushState({}, 'Product Admin - Dashboard', changedUrl);
+            //}
             paginationBtn(type, behavior, totalPages, currentPage,hasPrevPage, hasNextPage);
         }
     )
-   
 }
 
 function setOnClickListener(){
@@ -62,7 +75,7 @@ function setOnClickListener(){
             }
             spinner.removeAttribute("hidden");
 
-            $.getJSON('api/accounts/edit-status', {accountType, behavior, id}, (result)=>{
+            $.getJSON('api/accounts/edit-status', {type, behavior, id}, (result)=>{
                 changView(btnStatus, spinner, result.newStatus);
             })
           

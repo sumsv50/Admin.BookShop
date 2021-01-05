@@ -1,10 +1,10 @@
 
 window.onpopstate = function(event) {
     var path_product = window.location.pathname + window.location.search;
-    console.log(path_product);
-    if(window.location.pathname == "products") {
+
+    if(window.location.pathname == "/products") {
         replaceProducts("api" + path_product, true);
-    } else {
+    } else if(window.location.pathname == "/accounts"){
         replaceAccounts("api" + path_product, true);
     }
     
@@ -18,11 +18,14 @@ function replaceView(url, itemsHtml, result, notPushState){
     hasPrevPage = result.hasPrevPage;
     hasNextPage = result.hasNextPage;
 
-    paginationBtn(type, behavior, totalPages, currentPage, hasPrevPage, hasNextPage);
     if(!notPushState) {
         const newurl = url.replace('/api','');
         history.pushState({}, 'Product Admin - Dashboard', newurl);
     }
+    var urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams.toString());
+    
+    paginationBtn(typeRou, behavior, totalPages, currentPage, hasPrevPage, hasNextPage);
 }
 
 function replaceProducts(url, notPushState) {
@@ -41,11 +44,9 @@ function replaceProducts(url, notPushState) {
 }
 function replaceAccounts(url, notPushState) {
     var template = Handlebars.compile($('#list-item-template').html());
-    $.getJSON(url,
-        {
-            accountType,
-        }
-        ,function(result) {
+
+    $.getJSON(url
+        , function(result) {
             result.docs.forEach(user => {
                 if(user.createdAt){
                     var date = new Date(user.createdAt);
@@ -55,7 +56,7 @@ function replaceAccounts(url, notPushState) {
                     user.me = true;
                 }
                 user.active = user.status == "ACTIVE" ? true : false;
-
+                user.type = type;
             });
 
             var itemsHtml = template({accounts: result.docs});
@@ -68,8 +69,8 @@ function replaceAccounts(url, notPushState) {
         } ) 
 }
 
-function paginationBtn(type, behavior, totalPages, currentPage, hasPrevPage, hasNextPage) {
+function paginationBtn(typeRou, behavior, totalPages, currentPage, hasPrevPage, hasNextPage) {
     var template = Handlebars.compile($('#btnPaginate-item').html());
-    var paginateHtml = template({type, behavior, totalPages, currentPage, hasPrevPage, hasNextPage});
+    var paginateHtml = template({typeRou, behavior, totalPages, currentPage, hasPrevPage, hasNextPage});
     $('#pagination-wrapper').html(paginateHtml);
  }

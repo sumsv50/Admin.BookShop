@@ -4,7 +4,7 @@ const adminAccountService = require('../../models/modelServices/adminAccountServ
 const userAccountService = require('../../models/modelServices/userAccountService');
 const cloudinary = require('../../config/Cloudinary/index');
 
-const ITEM_PER_PAGE = 5;
+const ITEM_PER_PAGE = 7;
 
 class AccountsController{
     //[GET] /
@@ -91,26 +91,29 @@ class AccountsController{
     async list(req, res, next) {
         const page = req.query.page || 1;
         var paginate = undefined;
-        if(req.query.accountType == "user") {
+        if(req.query.type == "user") {
             paginate = await userAccountService.list({}, page, ITEM_PER_PAGE);
-        } else if(req.query.accountType == "admin") {
+        } else if(req.query.type == "admin") {
             paginate = await adminAccountService.list({}, page, ITEM_PER_PAGE);
         }
-
-        res.json({
-            docs: paginate.docs,
-            currentPage: paginate.page,
-            hasPrevPage: paginate.hasPrevPage,
-            hasNextPage: paginate.hasNextPage,
-            totalPages: paginate.totalPages,
-        });
+        if(paginate) {
+            res.json({
+                docs: paginate.docs,
+                currentPage: paginate.page,
+                hasPrevPage: paginate.hasPrevPage,
+                hasNextPage: paginate.hasNextPage,
+                totalPages: paginate.totalPages,
+            });
+        } else {
+            res.send('ERROR');
+        }
 
     }
 
     // [GET] api/accounts/edit-status
     async editStatus(req, res, next) {
        try {
-            var accountType = req.query.accountType;
+            var type = req.query.type;
             var behavior = req.query.behavior;
             var id = req.query.id;
             var newStatus, currentStatus;
@@ -123,9 +126,9 @@ class AccountsController{
                 currentStatus = "BLOCK";
             }
             
-            if(accountType == "user"){
+            if(type == "user"){
                 result = await userAccountService.editStatus(id, newStatus);
-            } else if(accountType == "admin" && req.user._id != id){
+            } else if(type == "admin" && req.user._id != id){
                 result = await adminAccountService.editStatus(id, newStatus);
             }
             

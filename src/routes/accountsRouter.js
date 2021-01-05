@@ -14,6 +14,6 @@ router.get('/my-profile', accountsController.showMyProfile);
 router.post('/store-admin-account', accountsController.storeAdminAccount);
 
 // [GET] accounts/:id/view
-router.get('/:id/view', accountsController.view);
+router.get('/:type/:id/view', accountsController.view);
 
 module.exports = router;

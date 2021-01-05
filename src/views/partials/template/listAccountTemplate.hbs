@@ -1,8 +1,10 @@
 \{{#each accounts}}
-    <tr id = "line">
+    <tr>
         <th scope="row"><input type="checkbox" /></th>
         <td class="tm-product-name">
-            <a class='link-edit' href='accounts/\{{this._id}}/view'>\{{this.username}}</a>
+            <a class='link-edit' href='accounts/\{{this.type}}/\{{this._id}}/view'>
+                \{{this.username}}
+            </a>
         </td>
         <td>\{{this.name}}</td>
         

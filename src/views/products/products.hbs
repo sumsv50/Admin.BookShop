@@ -222,7 +222,7 @@
     })
 
         //Paginate button
-        var type = "products";
+        var typeRou = "products";
         var behavior = "replaceProducts";
         var totalPages, currentPage, hasPrevPage, hasNextPage;
         {{#if totalPages }} totalPages = {{totalPages}} {{/if}};
@@ -231,7 +231,7 @@
         {{#if hasNextPage }} hasNextPage = {{hasNextPage}} {{/if}};
 
 
-        paginationBtn(behavior, type, totalPages, currentPage, hasPrevPage, hasNextPage);
+        paginationBtn(typeRou, behavior, totalPages, currentPage, hasPrevPage, hasNextPage);
        
 
         //---------------SEARCH--------------------//

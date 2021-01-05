@@ -3,10 +3,33 @@ const userAccountService = require('../models/modelServices/userAccountService')
 const formidable = require('formidable');
 const cloudinary = require('../config/Cloudinary/index');
 
+const ITEM_PER_PAGE = 7;
 const currentTab = 'accounts'
 class AccountsController{
-    //[GET/accounts]
-    index(req, res){
+    //[GET] /accounts
+    async index(req, res){
+        const type = req.query.type;
+        const page = req. query.page || 1;
+        var paginate = undefined;
+
+        if(type == "user") {
+            paginate = await userAccountService.list({}, page, ITEM_PER_PAGE);
+        } else if(type == "admin") {
+            paginate = await adminAccountService.list({}, page, ITEM_PER_PAGE);
+        }
+
+        if(paginate) {
+
+            res.render('accounts/accounts', {
+                currentTab,
+                type: type,
+                accounts: paginate.docs,
+                currentPage: paginate.page,
+                hasPrevPage: paginate.hasPrevPage,
+                hasNextPage: paginate.hasNextPage,
+                totalPages: paginate.totalPages,
+            });
+        } else
         res.render('accounts/accounts', {currentTab});
     }
 
@@ -47,7 +70,17 @@ class AccountsController{
 
     // [GET] accounts/:id/view
     async view(req, res, next) {
-        res.send('ahihi');
+
+        const id = req.params.id;
+        const type = req.params.type;
+        var account;
+        if(type == "user" ) {
+            account = await userAccountService.findbyId(id);
+        } else if (type == "admin") {
+            account = await adminAccountService.getAdmin(id);
+        }
+
+        res.render('accounts/account-detail', {account});
     }
 
 }
