@@ -10,7 +10,7 @@ window.onpopstate = function(event) {
     
 }
 
-function replaceView(url, itemsHtml, result, notPushState){
+function replaceView(url, itemsHtml, result, notPushState) {
     $('#items-list').html(itemsHtml);
     
     totalPages = result.totalPages;
@@ -41,6 +41,8 @@ function replaceProducts(url, notPushState) {
         replaceView(url, itemsHtml, result, notPushState);
 
     });
+    var row = document.querySelector('.tm-content-row');
+    row.scrollIntoView({behavior: "smooth"});
 }
 function replaceAccounts(url, notPushState) {
     var template = Handlebars.compile($('#list-item-template').html());
@@ -67,6 +69,8 @@ function replaceAccounts(url, notPushState) {
             setOnClickListener();
            
         } ) 
+        var selector = document.querySelector('#select-user');
+        selector.scrollIntoView({behavior: "smooth"});
 }
 
 function paginationBtn(typeRou, behavior, totalPages, currentPage, hasPrevPage, hasNextPage) {
