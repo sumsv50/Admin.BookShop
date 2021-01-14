@@ -63,7 +63,7 @@
                                 {{#each products}}
                                 <tr>
                                     <td class="tm-product-name">
-                                        <a class='link-edit' href='products/{{this._id}}/edit'>{{this.name}}</a>
+                                        <a class='link-edit' href='products/{{this._id}}/edit?inp={{../currentPage}}'>{{this.name}}</a>
                                     </td>
                                     <td>{{this.author}}</td>
                                     <td>0</td>

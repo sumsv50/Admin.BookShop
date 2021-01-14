@@ -5,12 +5,12 @@
   <ol class="carousel-indicators">
       \{{#each imgs}}
           <li data-target="#carouselExampleIndicators" data-slide-to="\{{@index}}"
-            \{{#unless @index}} class="active" \{{/unless}} ></li>
+            \{{#ifEquals @index ../pStart}} class="active" \{{/ifEquals}} ></li>
       \{{/each}}
   </ol>
   <div id="slide-img" class="carousel-inner">
       \{{#each imgs}}
-          <div class="carousel-item \{{#unless @index}} active \{{/unless}}" index= \{{@index}}>
+          <div class="carousel-item \{{#ifEquals @index ../pStart}} active \{{/ifEquals}}" index= \{{@index}}>
               <img id="imgPreview" class="d-block w-100" alt="Preview Img" src="\{{this.src}}">
               <div class="carousel-caption d-none d-lg-block">
 

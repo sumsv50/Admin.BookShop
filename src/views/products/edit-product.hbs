@@ -15,7 +15,7 @@
                     </div>
                     <div class="row tm-edit-product-row">
                         <div class="col-xl-12 col-lg-12 col-md-12">
-                            <form method="POST" action="/products/{{product._id}}?_method=PUT"
+                            <form method="POST" action="/products/{{product._id}}?_method=PUT&&inp={{currentPage}}"
                                 class="tm-edit-product-form" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="form-group mb-3 col-xs-12 col-sm-8">
@@ -137,7 +137,11 @@
     </script>
     <script src="js/product/edit-product.js"></script>
     <script>
-        
+        Handlebars.registerHelper('ifEquals', function (arg1, arg2, options) {
+            return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+        });
+
+
         var imgs = [];
         var template = Handlebars.compile($('#slide-img-template').html());
 
@@ -146,6 +150,8 @@
         {{/each}}
 
         updateImg();
+
+        
         
     </script>
 </body>

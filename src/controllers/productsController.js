@@ -8,7 +8,7 @@ const categoryService = require('../models/modelServices/categoryService');
 const cloudinary = require('../config/Cloudinary/index');
 
 const currentTab= 'product';
-const ITEM_PER_PAGE = 7;
+const ITEM_PER_PAGE = 10;
 
 class ProductsController {
 
@@ -84,7 +84,15 @@ class ProductsController {
                     await productService.store(fields);
                     // Increase number of books of Category
                     await categoryService.increaseNum(mongoose.Types.ObjectId(fields.categoryID));
-                    res.redirect('/products');
+
+                    const numOfBooks = await productService.countBooks();
+                    const page = Math.ceil(numOfBooks / ITEM_PER_PAGE);
+                    
+                    if(page > 1) {
+                        res.redirect('/products?page=' + page);
+                    } else {
+                        res.redirect('/products');
+                    };
                 }catch(err){ next(err) };
             });
         } catch (err) { next(err) };
@@ -101,11 +109,12 @@ class ProductsController {
     // [GET] /products/:id/edit
     async edit(req, res, next){
         try{
+            const currentPage = req.query.inp || 1;
             const categories = await categoryService.list();
             const product = await productService.findByID(req.params.id);
             product.categoryID = product.categoryID.toString();
            
-            res.render('products/edit-product', { product, categories, currentTab });  
+            res.render('products/edit-product', { product, categories, currentTab, currentPage });  
         } catch(err) { next(err) }; 
     }
 
@@ -119,6 +128,8 @@ class ProductsController {
                     next(err);
                     return;
                 }
+                
+                const currentPage = req.query.inp;
 
                 const oldProduct = await productService.findByID(req.params.id);
                 const categoryID_old = oldProduct.categoryID;
@@ -162,7 +173,11 @@ class ProductsController {
                     await categoryService.increaseNum(fields.categoryID);
                    
                 }
-                res.redirect('/products');
+                if(currentPage > 1) {
+                    res.redirect(`/products?page=${currentPage}`);
+                } else {
+                    res.redirect('/products');
+                }
             } catch(err) {next(err)}; 
         });
 

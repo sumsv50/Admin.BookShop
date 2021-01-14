@@ -12,6 +12,7 @@ window.onpopstate = function(event) {
 
 function replaceView(url, itemsHtml, result, notPushState) {
     $('#items-list').html(itemsHtml);
+    document.querySelector('#items-list').style.opacity = "1";   
     
     totalPages = result.totalPages;
     currentPage = result.currentPage;
@@ -30,6 +31,8 @@ function replaceView(url, itemsHtml, result, notPushState) {
 
 function replaceProducts(url, notPushState) {
     var template = Handlebars.compile($('#list-item-template').html());
+
+    document.querySelector('#items-list').style.opacity = "0.5";    
     $.getJSON (url, function(result) {
         result.products.forEach(product => {
             if(product.createdAt) {
@@ -37,7 +40,8 @@ function replaceProducts(url, notPushState) {
                 product.createdAt = date.toLocaleString();
             }
         });
-        var itemsHtml = template({products: result.products});
+        currentPage = result.currentPage;
+        var itemsHtml = template({products: result.products, currentPage});
         replaceView(url, itemsHtml, result, notPushState);
 
     });
@@ -46,7 +50,8 @@ function replaceProducts(url, notPushState) {
 }
 function replaceAccounts(url, notPushState) {
     var template = Handlebars.compile($('#list-item-template').html());
-
+    document.querySelector('#items-list').style.opacity = "0.5"; 
+    
     $.getJSON(url
         , function(result) {
             result.docs.forEach(user => {
@@ -61,7 +66,8 @@ function replaceAccounts(url, notPushState) {
                 user.type = type;
             });
 
-            var itemsHtml = template({accounts: result.docs});
+            currentPage = result.currentPage;
+            var itemsHtml = template({accounts: result.docs, currentPage});
 
             //paginate;
             replaceView(url, itemsHtml, result, notPushState);

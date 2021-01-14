@@ -5,7 +5,7 @@ var template = Handlebars.compile($('#list-item-template').html());
 
 selectionUser.onchange = function() {
     type = selectionUser.value;
-    
+    document.querySelector('#select-user').disabled = true; 
     $.getJSON(url,
         {
             type,
@@ -27,6 +27,8 @@ selectionUser.onchange = function() {
 
             var accountHtml = template({accounts: result.docs});
             $('#items-list').html(accountHtml);
+
+            document.querySelector('#select-user').disabled = false; 
             
             setOnClickListener();
             
