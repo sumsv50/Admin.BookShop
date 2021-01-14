@@ -59,7 +59,9 @@ var updateImg  = function () {
             }
         }
         fileInput.files = dt.files;
-        
+        if(pStart >= imgs.length) {
+            pStart = imgs.length - 1;
+        }
     
         generateImgs(imgs, pStart, template);
     })
