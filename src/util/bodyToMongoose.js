@@ -13,5 +13,6 @@ module.exports = {
         formData.detail = detail;
         
         return formData;
-    }
+    },
+
 }

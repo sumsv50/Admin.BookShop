@@ -22,5 +22,17 @@ router.get('/logout', function(req, res){
     res.redirect('/login');
   });
 
+// [GET] /forgot-password
+router.get('/forgot-password', siteController.resetPassword);
+
+// [POST] /forgot-password
+router.post('/forgot-password', siteController.forgotPassword);
+
+// [GET] /reset/:token/:id
+router.get('/reset/:token/:id', siteController.reset);
+
+// [POST] /reset/:token/:id
+router.post('/reset/:token/:id', siteController.changePassword);
+
 
 module.exports = router;

@@ -813,7 +813,9 @@ li:not(.active):not(.disabled){
 #failure-flash {
   color: rgb(238, 28, 28);
 }
-
+#success-flash {
+  color: rgb(46, 216, 60);
+}
 #select-user {
   margin-bottom: -50px;
 }
@@ -836,4 +838,13 @@ li:not(.active):not(.disabled){
 }
 #bin-column{
   width: 70px;
+}
+
+#announcement-link {
+  margin-top: 100px;
+}
+
+#announcement-link {
+  margin: 100px auto;
+  margin-bottom: 200px;
 }

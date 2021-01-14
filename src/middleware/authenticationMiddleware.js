@@ -2,7 +2,8 @@ const allowUrl = ['login'];
 
 
 const authenticationMiddleware = (req, res, next) => {
-    if(req.url == '/login' || (req.user && req.user.status == "ACTIVE")) {
+    if(req.url == '/login' || req.url.slice(1,6) == 'reset' ||
+        req.url =='/forgot-password' || (req.user && req.user.status == "ACTIVE")) {
        return next();
     } 
 

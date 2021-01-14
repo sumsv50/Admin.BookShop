@@ -139,7 +139,6 @@ class ProductsController {
                     fields.img.splice(+index, 1);
                 }
 
-                console.log("img:", fields.img);
                 
                 //Thêm vào các cuốn sách do người dùng thêm vào.
                 const imgs = files.img;

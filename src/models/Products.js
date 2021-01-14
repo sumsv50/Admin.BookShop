@@ -6,6 +6,7 @@ mongoose.plugin(slug);
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
+
 const Product = new Schema({
     type: String,
     name: String,

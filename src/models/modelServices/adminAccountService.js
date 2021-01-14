@@ -14,6 +14,10 @@ module.exports.getAdmin = (id) => {
     return AdminAccount.findOne({_id: id}).lean();
 }
 
+module.exports.getAdminByUsername = (username) => {
+    return AdminAccount.findOne({username}).lean();
+}
+
 module.exports.checkCredential = async(username, password) => {
     try {
         const user = await AdminAccount.findOne({username}).lean();

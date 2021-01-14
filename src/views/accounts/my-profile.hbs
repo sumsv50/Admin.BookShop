@@ -152,7 +152,7 @@
             Validator.minLength('#current-password', 6, 'Password must be at least 6 charactor'),
             Validator.isRequired('#new-password', 'New Password is required'),
             Validator.minLength('#new-password', 6, 'Password must be at least 6 charactor'),
-             Validator.notSame('#new-password','#current-password', 'Current password and new password cannot be same.'),
+            Validator.notSame('#new-password','#current-password', 'Current password and new password cannot be same.'),
             Validator.isRequired('#confirm-new-password', 'Confirm New Password is required'),
             Validator.minLength('#confirm-new-password', 6, 'Password must be at least 6 charactor'),
             Validator.match('#confirm-new-password', '#new-password', 'Passwords do not match.'),
