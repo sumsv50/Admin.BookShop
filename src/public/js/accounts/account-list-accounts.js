@@ -5,7 +5,12 @@ var template = Handlebars.compile($('#list-item-template').html());
 
 selectionUser.onchange = function() {
     type = selectionUser.value;
-    document.querySelector('#select-user').disabled = true; 
+    document.querySelector('#select-user').disabled = true;
+    $(document).ready(function () {
+        $('.toast').toast('hide');
+    })
+    txtKey.value = '';
+
     $.getJSON(url,
         {
             type,

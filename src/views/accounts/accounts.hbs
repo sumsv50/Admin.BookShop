@@ -230,6 +230,10 @@
     <script src="js/accounts/account-list-accounts.js"></script>
     <script src="js/function/imgPreview.js"></script>
     <script>
+        $(document).ready(function () {
+            $('.toast').toast('show');
+        })
+
         var meId;
         {{#if user }}
         meId = "{{user._id}}";
@@ -251,6 +255,34 @@
         {{#if totalPages}}
             paginationBtn(typeRou, behavior, totalPages, currentPage, hasPrevPage, hasNextPage);
         {{/if}}
+
+
+        //---------------SEARCH--------------------//
+        var txtKey = document.getElementById('txtKey');
+
+        //set key user have been search
+        {{#if key}} txtKey.value = '{{key}}' {{/if}};
+
+        txtKey.addEventListener('keyup', ()=> {
+            if (event.keyCode === 13) {
+                document.getElementById("btnSearch").click();
+            }
+        })
+
+        onClickSearch = () => {
+            urlParams.delete('page');
+            urlParams.set('key', txtKey.value);
+            window.location = `/accounts?${urlParams}`;
+        }
+
+
+        //Tag search
+       
+        onClickBtnKey = () => {
+            urlParams.delete('key');
+            urlParams.delete('page');
+            window.location = `/accounts?${urlParams}`;
+        }
     </script>
 </body>
 

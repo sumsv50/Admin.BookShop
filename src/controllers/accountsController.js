@@ -10,13 +10,20 @@ class AccountsController{
     async index(req, res){
         const type = req.query.type;
         const page = req. query.page || 1;
+        const key = req.query.key;
         var paginate = undefined;
 
-        if(type == "user") {
-            paginate = await userAccountService.list({}, page, ITEM_PER_PAGE);
-        } else if(type == "admin") {
-            paginate = await adminAccountService.list({}, page, ITEM_PER_PAGE);
+        const query = {};
+        if(key) {
+            query.username = new RegExp(key,'i');
         }
+        
+        if(type == "user") {
+            paginate = await userAccountService.list(query, page, ITEM_PER_PAGE);
+        } else if(type == "admin") {
+            paginate = await adminAccountService.list(query, page, ITEM_PER_PAGE);
+        }
+
 
         if(paginate) {
 
@@ -28,6 +35,7 @@ class AccountsController{
                 hasPrevPage: paginate.hasPrevPage,
                 hasNextPage: paginate.hasNextPage,
                 totalPages: paginate.totalPages,
+                key,
             });
         } else
         res.render('accounts/accounts', {currentTab});
